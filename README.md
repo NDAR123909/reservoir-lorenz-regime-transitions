@@ -1,8 +1,8 @@
 # Parameter-aware echo state networks for Lorenz regime transitions
 
-Can a reservoir computer, trained on a handful of chaotic trajectories at a few values of the Lorenz parameter rho, reconstruct the system's bifurcation diagram at values of rho it never saw? That is the whole question. The network gets the parameter handed to it as an extra input channel, so in principle it can be told "now behave as if rho were this" and run forward from there.
+Can a reservoir computer, trained on a handful of chaotic trajectories at a few values of the Lorenz parameter rho, reconstruct the system's bifurcation diagram at values of rho that it never saw? That is the whole question that this project aims to answer. The network gets the parameter handed to it as an extra input channel, so in principle, it can be told "now behave as if rho were this" and run forward from there.
 
-This repo is the code and the running record for that project. It is a solo build, written in stages, with each session logged in `paper/`.
+This repository is the code and the running record for that project. It is built and tested entirely by the the author of the project, written in stages, with each and every session documented logged in `paper/`.
 
 ## Where things stand
 
