@@ -1,0 +1,35 @@
+{
+  "tag": "c1_v2",
+  "master_seed": 20260613,
+  "realizations": 10,
+  "locked_cfg": {
+    "gamma_p": 0.1,
+    "spectral_radius": 0.6
+  },
+  "revision": "methodology v2 / Option A",
+  "metrics": {
+    "class_acc": 1.0,
+    "zmax_rmse": 0.6965037748548621,
+    "z_range": 30.36655540731857,
+    "zmax_rmse_frac": 0.02293654204477204,
+    "rmse_rho_min": 24.74,
+    "n_rmse_points": 73.0,
+    "lyap_proxy_err": 0.06078025129318607,
+    "n_rho": 81.0,
+    "n_class_wrong": 0.0
+  },
+  "full_grid_rmse_frac": 0.07607053478898096,
+  "passed": true,
+  "parts": {
+    "class": true,
+    "rmse": true,
+    "lyap": true
+  },
+  "rho_train": [
+    24.56,
+    26.06,
+    27.56,
+    29.06
+  ],
+  "n_free": 4000
+}

@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Regenerable caches. These rebuild deterministically from the logged seeds
+# (see the reproducibility statement), so they are kept out of the repo.
+data/truth_cache.pkl            # C2-C4 ground-truth bifurcation + VGTT cache
+data/ground_truth_*.pkl         # C1 ground-truth bifurcation cache
+data/segcache/                  # per-config training segments (md5-seeded)
+data/*.log
+
+# Deliberately NOT ignored (shipped so figures reproduce from cache):
+#   data/C2_cells/  data/C3_cells/  data/C4_cells/   the 480 sweep cells
+#   data/c1v2_preds/                                 the 10 C1 prediction cells
+#   data/*.json                                      small gate/diagnostic logs

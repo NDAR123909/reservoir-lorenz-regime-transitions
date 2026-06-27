@@ -1,0 +1,11 @@
+# Core scientific stack for the parameter-aware ESN study.
+# Developed and validated on Python 3.12.3 (see .python-version).
+# A clean checkout on this interpreter with these exact pins reproduces the
+# shipped figures bit-for-bit; other versions are statistically equivalent but
+# not guaranteed identical, because the spectral-radius eigensolver and the
+# sparse-matrix RNG are version-sensitive at the bit level.
+#
+# Install:  python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+numpy==2.4.4
+scipy==1.17.1
+matplotlib==3.10.8

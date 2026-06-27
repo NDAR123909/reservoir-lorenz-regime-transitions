@@ -1,0 +1,33 @@
+{
+  "tag": "c1_timing",
+  "master_seed": 20260613,
+  "realizations": 4,
+  "cfg_overrides": {
+    "gamma_p": 0.5,
+    "spectral_radius": 0.9
+  },
+  "metrics": {
+    "class_acc": 0.9012345679012346,
+    "zmax_rmse": 3.4991772770357112,
+    "z_range": 30.36655540731857,
+    "zmax_rmse_frac": 0.11523128751680485,
+    "rmse_rho_min": null,
+    "n_rmse_points": 81.0,
+    "lyap_proxy_err": 0.19823016354997466,
+    "n_rho": 81.0,
+    "n_class_wrong": 8.0
+  },
+  "passed": false,
+  "parts": {
+    "class": false,
+    "rmse": false,
+    "lyap": false
+  },
+  "rho_train": [
+    24.56,
+    26.06,
+    27.56,
+    29.06
+  ],
+  "elapsed_s": 68.40426445007324
+}

@@ -1,0 +1,30 @@
+{
+  "tag": "c1",
+  "master_seed": 20260613,
+  "realizations": 1,
+  "cfg_overrides": {},
+  "metrics": {
+    "class_acc": 1.0,
+    "zmax_rmse": 0.7455606679322527,
+    "z_range": 30.36655540731857,
+    "zmax_rmse_frac": 0.02455203291686376,
+    "rmse_rho_min": 24.74,
+    "n_rmse_points": 73.0,
+    "lyap_proxy_err": 0.07079351152352838,
+    "n_rho": 81.0,
+    "n_class_wrong": 0.0
+  },
+  "passed": true,
+  "parts": {
+    "class": true,
+    "rmse": true,
+    "lyap": true
+  },
+  "rho_train": [
+    24.56,
+    26.06,
+    27.56,
+    29.06
+  ],
+  "elapsed_s": 25.254815578460693
+}
