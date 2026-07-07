@@ -2,7 +2,7 @@
 
 Can a reservoir computer, trained on a handful of chaotic trajectories at a few values of the Lorenz parameter rho, reconstruct the system's bifurcation diagram at values of rho that it never saw? That is the whole question that this project aims to answer. The network gets the parameter handed to it as an extra input channel, so in principle, it can be told "now behave as if rho were this" and run forward from there.
 
-This repository is the code and the running record for that project. It is built and tested entirely by the the author of the project, written in stages, with each and every session documented logged in `paper/`.
+This repository is the code and the running record for that project. It is built and tested entirely by the author of the project, written in stages, with each and every session documented and logged in `paper/`.
 
 ## Where things stand
 
@@ -42,6 +42,7 @@ experiments/
   build_truth_cache.py  precompute the ground-truth cache the C2/C3 VPT measurement reads
   run_sweep.py   chunked resumable C2-C4 driver + finalize (median curve, bootstrap IQR)
   make_figures.py       Figures 2-4 from the result JSONs
+  make_attractor_figure.py  Figure 5, 3D attractor climate at unseen rho (C1 companion)
   render_log_pdf.py     render a paper/0N_progress_log.md to PDF
   exp01_baseline.ipynb, exp02_sweep.ipynb, exp03_transitions.ipynb
 data/            shipped: the C2-C4 cell stores and C1 prediction cells, plus gate/diagnostic JSONs
@@ -92,7 +93,13 @@ python run_c1_v2.py --mode run --upto 10 --batch 10      # repeat until 10/10 on
 python run_c1_v2.py --mode finalize --upto 10            # scores, writes fig1_c1_v2_bifurcation.png
 ```
 
-Timing from a clean checkout, measured on the pinned stack: Figure 1 about 8 minutes, Figure 2 about 24, Figure 3 about 27, Figure 4 about 22. The whole pipeline end to end is a little over an hour; any single figure is well under it.
+Figure 5, the 3D attractor-climate companion to C1, needs no caches at all. It trains realization 0 fresh and free-runs at three unseen rho:
+
+```bash
+python make_attractor_figure.py                          # ~15 s, writes fig5_attractor_climate.png
+```
+
+Timing from a clean checkout, measured on the pinned stack: Figure 1 about 8 minutes, Figure 2 about 24, Figure 3 about 27, Figure 4 about 22, and Figure 5 about 15 seconds. The whole pipeline end to end is a little over an hour; any single figure is well under it.
 
 To walk the locked-gate path one configuration at a time (for the record, not needed to reproduce the figures):
 
@@ -109,6 +116,8 @@ Details, landmark values, and the locked hyperparameter ranges are in `paper/03_
 ## Status of the science
 
 All five contributions pass under methodology v2, so the study is methodologically complete. C1 reproduces the locked bifurcation diagram with amplitude RMSE scored on the chaotic band ρ ≥ 24.74. C2 measures extrapolation distance against training-range width and finds it non-monotone, with the absolute ceiling climbing cleanly. C3 measures it against sample density and finds it saturating at Δρ ≈ 0.30 from three samples on. C4 measures across-Hopf behaviour against window position and finds a position-independent collapse at the coexistence onset ρ ≈ 24.10. C5 makes the whole thing reproduce from a clean checkout.
+
+Figure 5 (`fig5_attractor_climate.png`) is a qualitative companion to C1: the actual attractor, true system on top and cold-extrapolated ESN below, at three ρ values the network never trained on, one just above the Hopf, one inside the training range, and one beyond its upper edge. One caution on reading it. A free-running ESN diverges from the true trajectory pointwise once past the valid prediction time, so what gets compared here is climate, the geometry the network settles onto, not the path itself. The z-maxima statistics in Figures 1–4 are the quantitative version of the same claim.
 
 The C2 / §2.4 item from Session 7 is closed (`paper/03_methodology_v3_note.md`). The W=10 lower edge fell below the Hopf, which collided with the §2.4 training exclusion. The methodology v3 note constrains the C2 grid so no window trains below the Hopf, and the clamped W=10 robustness check (`figures/c2clamp_result.json`) shows the result is unchanged at Δρ = 1.50, so the non-monotone C2 finding stands without a contamination caveat. None of this reopens the gate or the architecture.
 
