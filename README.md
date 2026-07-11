@@ -29,27 +29,40 @@ Locked hyperparameters: gamma_p = 0.1, spectral radius = 0.6, everything else at
 ## Layout
 
 ```
-src/
-  lorenz.py      RK4 integrator, regime classifier, Lyapunov exponent, bifurcation map
-  reservoir.py   the parameter-aware ESN (sparse reservoir, ridge readout, separate param channel)
-  metrics.py     valid prediction time, correlation dimension, z-maxima Wasserstein distance
-  training.py    segment builder, realization training, C1 acceptance test
-  sweep.py       C2-C4 extrapolation-distance measurement (methodology 3.5) and sweep definitions
-experiments/
-  run_c1.py      the C1 gate: train, cold-extrapolate, score against ground truth
-  gate_one.py    evaluate one hyperparameter config (used to walk the section-8 path)
-  run_c1_v2.py   C1 re-validation under the v2 criterion (checkpoint-and-resume)
-  build_truth_cache.py  precompute the ground-truth cache the C2/C3 VPT measurement reads
-  run_sweep.py   chunked resumable C2-C4 driver + finalize (median curve, bootstrap IQR)
-  make_figures.py       Figures 2-4 from the result JSONs
-  make_attractor_figure.py  Figure 5, 3D attractor climate at unseen rho (C1 companion)
-  render_log_pdf.py     render a paper/0N_progress_log.md to PDF
-  exp01_baseline.ipynb, exp02_sweep.ipynb, exp03_transitions.ipynb
-data/            shipped: the C2-C4 cell stores and C1 prediction cells, plus gate/diagnostic JSONs
-                 regenerated (gitignored): the ground-truth and segment caches
-figures/         output plots and per-sweep result JSONs
-paper/           charter, literature review, methodology, and the session progress logs
-REPRODUCIBILITY.md   seeds, determinism, what is cached vs regenerated, tolerance
+.
+├── src/
+│   ├── lorenz.py                  # RK4 integrator, regime classifier, Lyapunov exponent, bifurcation map
+│   ├── reservoir.py               # Parameter-aware ESN (sparse reservoir, ridge readout, separate parameter channel)
+│   ├── metrics.py                 # Valid prediction time, correlation dimension, z-maxima Wasserstein distance
+│   ├── training.py                # Segment builder, realization training, C1 acceptance test
+│   └── sweep.py                   # C2–C4 extrapolation-distance measurement (Methodology §3.5) and sweep definitions
+│
+├── experiments/
+│   ├── run_c1.py                  # C1 gate: train, cold-extrapolate, score against ground truth
+│   ├── gate_one.py                # Evaluate one hyperparameter configuration (Section 8 search path)
+│   ├── run_c1_v2.py               # C1 re-validation under the v2 criterion (checkpoint/resume)
+│   ├── build_truth_cache.py       # Precompute ground-truth cache used by C2/C3 VPT measurements
+│   ├── run_sweep.py               # Chunked, resumable C2–C4 driver + finalization
+│   │                              # (median curves, bootstrap IQR)
+│   ├── make_figures.py            # Generate Figures 2–4 from result JSONs
+│   ├── make_attractor_figure.py   # Generate Figure 5 (3D attractor climate at unseen ρ)
+│   ├── render_log_pdf.py          # Convert paper/0N_progress_log.md to PDF
+│   ├── exp01_baseline.ipynb
+│   ├── exp02_sweep.ipynb
+│   └── exp03_transitions.ipynb
+│
+├── data/
+│   ├── Shipped:
+│   │   ├── C2–C4 cell stores
+│   │   ├── C1 prediction cells
+│   │   └── Gate/diagnostic JSONs
+│   └── Regenerated (gitignored):
+│       ├── Ground-truth cache
+│       └── Segment caches
+│
+├── figures/                       # Output plots and per-sweep result JSONs
+├── paper/                         # Charter, literature review, methodology, session progress logs
+└── REPRODUCIBILITY.md             # Seeds, determinism, cached vs. regenerated artifacts, tolerances
 ```
 
 ## Reproducing the figures
