@@ -29,7 +29,6 @@ Locked hyperparameters: gamma_p = 0.1, spectral radius = 0.6, everything else at
 ## Layout
 
 ```
-.
 ├── src/
 │   ├── lorenz.py                  # RK4 integrator, regime classifier, Lyapunov exponent, bifurcation map
 │   ├── reservoir.py               # Parameter-aware ESN (sparse reservoir, ridge readout, separate parameter channel)
