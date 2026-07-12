@@ -19,10 +19,6 @@ geometry the network settles onto — not the pointwise trajectory.*
 
 - **C1** — Reproduce the bifurcation diagram from four training values
   (the gate: nothing else runs until this passes).
-![C1 bifurcation reconstruction](figures/fig1_c1_v2_bifurcation.png)
-*Predicted z-maxima (red) against the true diagram (grey). Dotted lines mark the
-four training ρ; the dashed line is the Hopf; the shaded band is the coexistence
-region, excluded from the amplitude RMSE.*
 - **C2** — Extrapolation reach vs. training-range **width**.
 - **C3** — Extrapolation reach vs. training-sample **density**.
 - **C4** — Across-Hopf behaviour vs. training-window **position**.
@@ -39,6 +35,11 @@ All five contributions pass under methodology v2 (`paper/03_methodology_v2.pdf`)
   grid (bar: ≥ 95%), z-maxima amplitude RMSE 2.29% of the z-range on the
   chaotic band ρ ≥ 24.74 (bar: ≤ 5%), largest-Lyapunov agreement 6.1%
   (bar: ≤ 10%).
+![C1 bifurcation reconstruction](figures/fig1_c1_v2_bifurcation.png)
+
+*Predicted z-maxima (red) against the true diagram (grey). Dotted lines mark the
+four training ρ; the dashed line is the Hopf; the shaded band is the coexistence
+region, excluded from the amplitude RMSE.*
 - **C2** is non-monotone: marginal reach falls from Δρ = 1.20 at W = 2 to 0.20
   at W = 8, then rises to 1.50 at W = 10, while the absolute ceiling climbs
   cleanly from 31.2 to 35.5. The upturn survives a Hopf-clamped robustness
