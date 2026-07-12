@@ -6,23 +6,23 @@ bifurcation diagram at values it never saw? And what controls how far past the
 training window it stays right?
 
 This repository contains the code, experiments, figures, and research notes for
-that question. The scientific write-up lives in `paper/`; the README covers
+that question, and the README covers
 what the project found and how to reproduce it.
 
 ![Attractor climate at unseen ρ: true Lorenz (grey) vs. cold-extrapolated ESN (red)](figures/fig5_attractor_climate.png)
 
 *True Lorenz attractor (top, grey) vs. the ESN free-running cold (bottom, red) at
-three values of ρ the network never trained on. What's compared is climate — the
-geometry the network settles onto — not the pointwise trajectory.*
+three values of ρ the network never trained on. This is a climate-comparison for the
+geometry that the network settles onto, not a comparison regarding the pointwise trajectory.*
 
-## The five contributions
+## Each of the five contributions
 
-- **C1** — Reproduce the bifurcation diagram from four training values
+- **C1**: Reproduce the bifurcation diagram from four training values
   (the gate: nothing else runs until this passes).
-- **C2** — Extrapolation reach vs. training-range **width**.
-- **C3** — Extrapolation reach vs. training-sample **density**.
-- **C4** — Across-Hopf behaviour vs. training-window **position**.
-- **C5** — Full reproducibility from a clean checkout.
+- **C2**: Extrapolation reach vs. training-range **width**.
+- **C3**: Extrapolation reach vs. training-sample **density**.
+- **C4**: Across-Hopf behaviour vs. training-window **position**.
+- **C5**: Full reproducibility from a clean checkout.
 
 Every sweep holds the architecture and total training data (120,000 network
 steps) fixed, so density effects can't hide data-volume effects.
