@@ -150,23 +150,23 @@ A sparse reservoir of N = 500 nodes is driven by the three standardized Lorenz
 coordinates plus a fourth channel carrying the normalized parameter:
 
 $$
+\begin{aligned}
 \mathbf{r}(t+\Delta t)
-=
-(1-\alpha)\mathbf{r}(t)
-+
-\alpha\tanh\!\left(
+&=(1-\alpha)\mathbf{r}(t)
++\alpha\tanh\!\left(
 W_r\mathbf{r}(t)
-+
-W_{\mathrm{in}}\mathbf{u}(t)
-+
-\mathbf{b}
-\right)
-$$
-
-$$
++W_{\mathrm{in}}\mathbf{u}(t)
++\mathbf{b}
+\right),\\[4pt]
 \mathbf{u}
-=
-[\hat{x},\hat{y},\hat{z},\hat{p}]^{\mathsf T}
+&=
+\begin{bmatrix}
+\hat{x}\\
+\hat{y}\\
+\hat{z}\\
+\hat{p}
+\end{bmatrix}.
+\end{aligned}
 $$
 
 where p̂ is ρ mapped onto a fixed reference interval. The state and parameter
