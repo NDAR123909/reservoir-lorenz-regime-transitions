@@ -146,32 +146,54 @@ hour end to end.
 
 ## The model, briefly
 
-A sparse reservoir of N = 500 nodes is driven by the three standardized Lorenz
+A sparse reservoir of **N = 500** nodes is driven by the three standardized Lorenz
 coordinates plus a fourth channel carrying the normalized parameter:
 
 $$
-\mathbf{r}(t + \Delta t) = (1 - \alpha)\,\mathbf{r}(t)
-+ \alpha \tanh\!\left( W_r\, \mathbf{r}(t) + W_{\mathrm{in}}\, \mathbf{u}(t) + \mathbf{b} \right),
-\qquad
-\mathbf{u} = [\hat{x},\ \hat{y},\ \hat{z},\ \hat{p}\,]
+\begin{aligned}
+\mathbf{r}(t+\Delta t)
+&=(1-\alpha)\mathbf{r}(t)
++\alpha\tanh\!\left(
+W_r\mathbf{r}(t)
++W_{\mathrm{in}}\mathbf{u}(t)
++\mathbf{b}
+\right),\\[4pt]
+\mathbf{u}
+&=
+\begin{bmatrix}
+\hat{x}\\
+\hat{y}\\
+\hat{z}\\
+\hat{p}
+\end{bmatrix}.
+\end{aligned}
 $$
 
-where p̂ is ρ mapped onto a fixed reference interval. The state and parameter
-columns of W_in are scaled separately (γ_in and γ_p), which matters more than I
-expected — γ_p turned out to be the one lever that actually moved the C1 error,
-and it moved it the opposite way from my initial guess. The readout is plain
-ridge regression solved in closed form:
+where $\hat{p}$ is the control parameter $\rho$ mapped onto a fixed reference
+interval. The state and parameter columns of $W_{\mathrm{in}}$ are scaled
+separately ($\gamma_{\mathrm{in}}$ and $\gamma_p$), which matters more than I
+expected—$\gamma_p$ turned out to be the one lever that actually moved the C1
+error, and it moved it in the opposite direction from my initial guess.
+
+The readout is ordinary ridge regression solved in closed form:
 
 $$
-W_{\mathrm{out}} = V R^{\top} \left( R R^{\top} + \lambda I \right)^{-1}
+W_{\mathrm{out}}
+=
+VR^{\top}
+\left(
+RR^{\top}
++\lambda I
+\right)^{-1}.
 $$
 
-For the bifurcation diagram the network runs cold: no ground-truth trajectory
-at the target ρ, just the parameter value and a free run.
+For the bifurcation diagram the network runs **cold**: no ground-truth trajectory
+at the target $\rho$, only the parameter value and a free rollout.
 
-Locked hyperparameters: γ_p = 0.1, spectral radius = 0.6, everything else at
-the documented priors. These are the `ESNConfig` defaults and carry into every
-sweep unchanged. Full details in `paper/03_methodology_v2.pdf`.
+Locked hyperparameters: $\gamma_p = 0.1$, spectral radius $=0.6$, with all other
+settings fixed at the documented priors. These are the `ESNConfig` defaults and
+carry into every sweep unchanged. Full details are in
+`paper/03_methodology_v2.pdf`.
 
 ## Future directions
 
