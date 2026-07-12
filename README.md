@@ -19,6 +19,10 @@ geometry the network settles onto — not the pointwise trajectory.*
 
 - **C1** — Reproduce the bifurcation diagram from four training values
   (the gate: nothing else runs until this passes).
+![C1 bifurcation reconstruction](figures/fig1_c1_v2_bifurcation.png)
+*Predicted z-maxima (red) against the true diagram (grey). Dotted lines mark the
+four training ρ; the dashed line is the Hopf; the shaded band is the coexistence
+region, excluded from the amplitude RMSE.*
 - **C2** — Extrapolation reach vs. training-range **width**.
 - **C3** — Extrapolation reach vs. training-sample **density**.
 - **C4** — Across-Hopf behaviour vs. training-window **position**.
