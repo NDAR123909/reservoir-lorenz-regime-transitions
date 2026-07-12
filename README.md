@@ -35,6 +35,7 @@ All five contributions pass under methodology v2 (`paper/03_methodology_v2.pdf`)
   grid (bar: ≥ 95%), z-maxima amplitude RMSE 2.29% of the z-range on the
   chaotic band ρ ≥ 24.74 (bar: ≤ 5%), largest-Lyapunov agreement 6.1%
   (bar: ≤ 10%).
+  
 ![C1 bifurcation reconstruction](figures/fig1_c1_v2_bifurcation.png)
 
 *Predicted z-maxima (red) against the true diagram (grey). Dotted lines mark the
