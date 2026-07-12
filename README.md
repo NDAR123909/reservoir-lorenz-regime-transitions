@@ -2,7 +2,7 @@
 
 If an echo state network is trained on Lorenz trajectories at only a few values
 of ρ, with ρ supplied as an extra input channel, can it reconstruct the
-bifurcation diagram at values it never saw — and what controls how far past the
+bifurcation diagram at values it never saw? And what controls how far past the
 training window it stays right?
 
 This repository contains the code, experiments, figures, and research notes for
