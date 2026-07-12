@@ -9,10 +9,11 @@ This repository contains the code, experiments, figures, and research notes for
 that question. The scientific write-up lives in `paper/`; the README covers
 what the project found and how to reproduce it.
 
-![C1 bifurcation reconstruction](figures/fig1_c1_v2_bifurcation.png)
+![Attractor climate at unseen ρ: true Lorenz (grey) vs. cold-extrapolated ESN (red)](figures/fig5_attractor_climate.png)
 
-*Predicted z-maxima (red) against the true diagram (grey). Dotted lines mark
-the four training ρ; the dashed line is the Hopf bifurcation.*
+*True Lorenz attractor (top, grey) vs. the ESN free-running cold (bottom, red) at
+three values of ρ the network never trained on. What's compared is climate — the
+geometry the network settles onto — not the pointwise trajectory.*
 
 ## The five contributions
 
