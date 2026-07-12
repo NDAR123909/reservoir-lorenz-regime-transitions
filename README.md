@@ -1,4 +1,4 @@
-# Parameter-aware echo state networks for Lorenz regime transitions
+# Parameter-Aware Echo State Networks for Lorenz Regime Transitions
 
 Can a reservoir computer, trained on a handful of chaotic trajectories at a few values of the Lorenz parameter rho, reconstruct the system's bifurcation diagram at values of rho that it never saw? That is the whole question that this project aims to answer. The network gets the parameter handed to it as an extra input channel, so in principle, it can be told "now behave as if rho were this" and run forward from there.
 
