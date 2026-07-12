@@ -149,25 +149,12 @@ hour end to end.
 A sparse reservoir of N = 500 nodes is driven by the three standardized Lorenz
 coordinates plus a fourth channel carrying the normalized parameter:
 
-$$
-\begin{aligned}
-\mathbf{r}(t+\Delta t)
-&=(1-\alpha)\mathbf{r}(t)
-+\alpha\tanh\!\left(
-W_r\mathbf{r}(t)
-+W_{\mathrm{in}}\mathbf{u}(t)
-+\mathbf{b}
-\right),\\[4pt]
-\mathbf{u}
-&=
-\begin{bmatrix}
-\hat{x}\\
-\hat{y}\\
-\hat{z}\\
-\hat{p}
-\end{bmatrix}.
-\end{aligned}
-$$
+```math
+\mathbf{r}(t+\Delta t) \,=\, (1-\alpha)\,\mathbf{r}(t)
+\,+\, \alpha \tanh\big( W_r\,\mathbf{r}(t) + W_{\mathrm{in}}\,\mathbf{u}(t) + \mathbf{b} \big),
+\qquad
+\mathbf{u} = [\hat{x},\ \hat{y},\ \hat{z},\ \hat{p}\,]^{\top}
+```
 
 where p̂ is ρ mapped onto a fixed reference interval. The state and parameter
 columns of W_in are scaled separately (γ_in and γ_p), which matters more than I
@@ -175,9 +162,9 @@ expected — γ_p turned out to be the one lever that actually moved the C1 erro
 and it moved it the opposite way from my initial guess. The readout is plain
 ridge regression solved in closed form:
 
-$$
-W_{\mathrm{out}} = V R^{\top} \left( R R^{\top} + \lambda I \right)^{-1}
-$$
+```math
+W_{\mathrm{out}} = V R^{\top} \big( R R^{\top} + \lambda I \big)^{-1}
+```
 
 For the bifurcation diagram the network runs cold: no ground-truth trajectory
 at the target ρ, just the parameter value and a free run.
@@ -186,7 +173,7 @@ Locked hyperparameters: γ_p = 0.1, spectral radius = 0.6, everything else at
 the documented priors. These are the `ESNConfig` defaults and carry into every
 sweep unchanged. Full details in `paper/03_methodology_v2.pdf`.
 
-## Future directions
+## Possible future directions
 
 - The C3 saturation is a prediction worth testing on next-generation and deep
   reservoir architectures.
