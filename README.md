@@ -66,27 +66,23 @@ is kept on record.
 
 ## Layout
 
-```
-├── src/
-│   ├── lorenz.py         # RK4 integrator, regime classifier, Lyapunov exponent
-│   ├── reservoir.py      # Parameter-aware ESN (sparse reservoir, ridge readout)
-│   ├── metrics.py        # Valid prediction time and related metrics
-│   ├── training.py       # Segment builder, realization training, C1 acceptance test
-│   └── sweep.py          # C2–C4 extrapolation-distance measurement and sweep definitions
-├── experiments/
-│   ├── run_c1.py                # C1: train, cold-extrapolate, score (also builds C1 truth cache)
-│   ├── run_c1_v2.py             # C1 re-validation under the v2 criterion (checkpoint/resume)
-│   ├── build_truth_cache.py     # Ground-truth cache shared by C2–C4
-│   ├── run_sweep.py             # Chunked, resumable C2–C4 driver + finalization
-│   ├── make_figures.py          # Figures 2–4 from result JSONs
-│   ├── make_attractor_figure.py # Figure 5 (3D attractor climate at unseen ρ)
-│   ├── gate_one.py              # Score a single hyperparameter configuration
-│   └── exp0*.ipynb              # Exploratory notebooks from early sessions
-├── data/                 # Shipped result cells and diagnostics (caches regenerate, gitignored)
-├── figures/              # Output plots and per-sweep result JSONs
-├── paper/                # Methodology, session progress logs (the detailed scientific record)
-└── REPRODUCIBILITY.md    # Seeds, determinism, cached vs. regenerated artifacts, tolerances
-```
+| Path | Contents |
+|------|----------|
+| `src/lorenz.py` | RK4 integrator, regime classifier, Lyapunov exponent |
+| `src/reservoir.py` | Parameter-aware ESN (sparse reservoir, ridge readout) |
+| `src/metrics.py` | Valid prediction time and related metrics |
+| `src/training.py` | Segment builder, realization training, C1 acceptance test |
+| `src/sweep.py` | C2–C4 extrapolation-distance measurement and sweep definitions |
+| `experiments/run_c1.py`, `run_c1_v2.py` | C1 gate: train, cold-extrapolate, score (v2 = revised criterion, checkpoint/resume) |
+| `experiments/build_truth_cache.py` | Ground-truth cache shared by C2–C4 |
+| `experiments/run_sweep.py` | Chunked, resumable C2–C4 driver + finalization |
+| `experiments/make_figures.py`, `make_attractor_figure.py` | Figures 2–4 from result JSONs; Figure 5 (attractor climate) |
+| `experiments/gate_one.py` | Score a single hyperparameter configuration |
+| `experiments/exp0*.ipynb` | Exploratory notebooks from early sessions |
+| `data/` | Shipped result cells and diagnostics (caches regenerate, gitignored) |
+| `figures/` | Output plots and per-sweep result JSONs |
+| `paper/` | Methodology, session progress logs (the detailed scientific record) |
+| `REPRODUCIBILITY.md` | Seeds, determinism, cached vs. regenerated artifacts, tolerances |
 
 The per-(config, realization) result cells under `data/C{2,3,4}_cells/` and the
 C1 prediction cells are shipped so figures rebuild in seconds. The ground-truth
@@ -151,13 +147,27 @@ hour end to end.
 ## The model, briefly
 
 A sparse reservoir of N = 500 nodes is driven by the three standardized Lorenz
-coordinates plus a fourth channel carrying the normalized parameter. The state
-and parameter columns of the input matrix are scaled separately (γ_in and γ_p),
-which matters more than I expected — γ_p turned out to be the one lever that
-actually moved the C1 error, and it moved it the opposite way from my initial
-guess. Readout is plain ridge regression solved in closed form. For the
-bifurcation diagram the network runs cold: no ground-truth trajectory at the
-target ρ, just the parameter value and a free run.
+coordinates plus a fourth channel carrying the normalized parameter:
+
+$$
+\mathbf{r}(t + \Delta t) = (1 - \alpha)\,\mathbf{r}(t)
++ \alpha \tanh\!\left( W_r\, \mathbf{r}(t) + W_{\mathrm{in}}\, \mathbf{u}(t) + \mathbf{b} \right),
+\qquad
+\mathbf{u} = [\hat{x},\ \hat{y},\ \hat{z},\ \hat{p}\,]
+$$
+
+where p̂ is ρ mapped onto a fixed reference interval. The state and parameter
+columns of W_in are scaled separately (γ_in and γ_p), which matters more than I
+expected — γ_p turned out to be the one lever that actually moved the C1 error,
+and it moved it the opposite way from my initial guess. The readout is plain
+ridge regression solved in closed form:
+
+$$
+W_{\mathrm{out}} = V R^{\top} \left( R R^{\top} + \lambda I \right)^{-1}
+$$
+
+For the bifurcation diagram the network runs cold: no ground-truth trajectory
+at the target ρ, just the parameter value and a free run.
 
 Locked hyperparameters: γ_p = 0.1, spectral radius = 0.6, everything else at
 the documented priors. These are the `ESNConfig` defaults and carry into every
