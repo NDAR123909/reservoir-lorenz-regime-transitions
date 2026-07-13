@@ -119,7 +119,7 @@ python make_figures.py
 cells bit-for-bit):
 
 ```bash
-python build_truth_cache.py                              # approximately 4-5 mins, once
+python build_truth_cache.py                              # approximately 4-5 mins but only runs once
 for s in C2 C3 C4; do
   while python run_sweep.py --mode run --sweep $s --R 32 --max-cells 60 \
         | grep -q "batch cap"; do :; done                # repeat until done
@@ -179,7 +179,7 @@ These are the following confirmed hyperparameters
 - spectral radius = 0.6
 
 All remaining hyperparameters were kept at their documented prior values. These are the `ESNConfig` defaults, and they carry into every
-sweep unchanged. Full details are in the accompanying paper/manuscript.
+sweep unchanged. The full details are in the accompanying paper/manuscript.
 
 ## BibTeX citation
 
