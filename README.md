@@ -39,7 +39,7 @@ All five contributions pass under methodology v2 (`paper/03_methodology_v2.pdf`)
 ![C1 bifurcation reconstruction](figures/fig1_c1_v2_bifurcation.png)
 
 *Predicted z-maxima (red) against the true diagram (grey). Dotted lines mark the
-four training ρ; the dashed line is the Hopf; the shaded band is the coexistence
+four training ρ, the dashed line is the Hopf, and the shaded band is the coexistence
 region, excluded from the amplitude RMSE.*
 - **C2** is non-monotone: marginal reach falls from Δρ = 1.20 at W = 2 to 0.20
   at W = 8, then rises to 1.50 at W = 10, while the absolute ceiling climbs
@@ -91,7 +91,7 @@ and segment caches are not shipped; they regenerate from logged seeds.
 
 ## Reproducing the figures
 
-Bit-for-bit reproduction needs the pinned environment: Python 3.12.3 with the
+Bit-for-bit reproduction needs the following pinned environment: Python 3.12.3 with the
 pinned numpy, scipy, and matplotlib. Other versions give statistically
 equivalent runs, not identical ones — the sparse-matrix RNG and the eigensolver
 are version-sensitive (see `REPRODUCIBILITY.md`).
