@@ -25,11 +25,11 @@ Everything random in the study traces back to one master seed, `20260613`.
 
 ## Determinism
 
-The pipeline is deterministic end to end on the pinned stack. There is one spot that was not, and the following fix is proposed:
+The pipeline is deterministic end to end on the pinned stack. There was one spot that was not, and this was the fix:
 
 `scipy.sparse.linalg.eigs` computes the largest eigenvalue magnitude used to rescale the reservoir to its target spectral radius. Left to its default, ARPACK seeds its starting residual from an unseeded RNG, so the converged magnitude varies slightly between processes. At the master seed the spread was about 4e-4. That is enough to move the rescale factor and occasionally flip a single valid-prediction-time threshold step, which is the difference between a run that reproduces bit for bit and one that only reproduces in distribution. Supplying `eigs` with a seeded `v0` pins the magnitude to a fixed value per seed. With the fix, the spectral-radius spread across repeated calls is zero, and two independent from-scratch runs of the same config produce identical cells.
 
-This change is primarily for the sake of convenient numerical analysis. It does not alter any hyperparameter or the architecture, which means that the target spectral radius is unchanged at 0.6.
+This change only affects determinism. It does not alter any hyperparameter or the architecture, which means that the target spectral radius is unchanged at 0.6.
 
 To check determinism yourself, run any one sweep config twice into separate trees and compare the cell pickles. They are byte-stable, the VPT arrays included.
 
