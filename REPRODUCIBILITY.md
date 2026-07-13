@@ -17,7 +17,7 @@ Everything random in the study traces back to one master seed, `20260613`.
 
 - Reservoir draws: realization `k` of any config uses reservoir seed `master + k`. This sets the sparse recurrent matrix, the input weights, and the bias.
 - Spectral-radius solver: the ARPACK starting vector is drawn from a generator keyed to `seed + 777`, separate from the reservoir RNG so the matrix and weight draws keep their order. This is the determinism fix described below.
-- Training segments: the per-config initial conditions are seeded from an md5 hash of the config id. This is deterministic across processes, which a salted Python `hash()` is not. It replaced the salted version in Session 7.
+- Training segments: the per-config initial conditions are seeded from an md5 hash of the config id. This is deterministic across processes, which a salted Python `hash()` is not. It replaced an earlier salted version.
 - C2-C4 ground truth: one seeded trajectory per ρ, initial condition from `master + 777`.
 - C1 ground truth: same scheme, cached separately as `ground_truth_20261390.pkl`.
 - C1 segments: initial conditions from `master + 1`.
