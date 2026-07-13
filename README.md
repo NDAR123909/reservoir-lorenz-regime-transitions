@@ -174,17 +174,7 @@ Locked hyperparameters: γ_p = 0.1, spectral radius = 0.6, everything else at
 the documented priors. These are the `ESNConfig` defaults and carry into every
 sweep unchanged. Full details in `paper/03_methodology_v2.pdf`.
 
-## Possible future directions
-
-- The C3 saturation is a prediction worth testing on next-generation and deep
-  reservoir architectures.
-- Everything here is one system, one architecture, one bifurcation. Rössler
-  and Chen are the obvious next testbeds.
-- The determinism fix (a seeded ARPACK starting vector in the spectral-radius
-  solver) ended up being its own small saga — `REPRODUCIBILITY.md` has the
-  details if you're trying to make a similar pipeline reproducible.
-
-## Citing this work
+## BibTeX citation
 
 The accompanying paper is in preparation. Until it's published, cite the
 repository directly; the methodology and progress logs in `paper/` are the
