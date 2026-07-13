@@ -84,6 +84,7 @@ The full-grid value of 7.61% is recorded while the full diagnosis is in the acco
 | `experiments/make_figures.py`, `make_attractor_figure.py` | Figures 2-4 from result JSONs; Figure 5 (attractor climate) |
 | `experiments/gate_one.py` | Score a single hyperparameter configuration |
 | `experiments/exp0*.ipynb` | Exploratory notebooks from early sessions |
+| `experiments/diag_*.py`, `gate_sweep.py` | Gate-search and coexistence-region diagnostics |
 | `data/` | Shipped result cells and diagnostics (caches regenerate, gitignored) |
 | `figures/` | Output plots and per-sweep result JSONs |
 | `REPRODUCIBILITY.md` | Seeds, determinism, cached vs. regenerated artifacts, tolerances |
