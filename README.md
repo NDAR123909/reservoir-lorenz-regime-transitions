@@ -18,7 +18,7 @@ geometry that the network settles onto, not a comparison regarding the pointwise
 ## Each of the five contributions
 
 - **C1**: Reproduce the bifurcation diagram from four training values
-  (the gate: nothing else runs until this passes).
+  (specifically the gate since nothing else runs until this passes).
 - **C2**: Extrapolation reach vs. training-range **width**.
 - **C3**: Extrapolation reach vs. training-sample **density**.
 - **C4**: Across-Hopf behaviour vs. training-window **position**.
@@ -31,7 +31,8 @@ steps) fixed, so density effects can't hide data-volume effects.
 
 All five contributions pass, and the acceptance bar for each of them is quoted with their respective results below
 
-- **C1** passes on all three criteria: regime-class accuracy 100% on the full
+- **C1** passes on all three criteria:
+  - regime-class accuracy 100% on the full
   grid (bar: ≥ 95%), z-maxima amplitude RMSE 2.29% of the z-range on the
   chaotic band ρ ≥ 24.74 (bar: ≤ 5%), largest-Lyapunov agreement 6.1%
   (bar: ≤ 10%).
