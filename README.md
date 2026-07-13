@@ -29,7 +29,7 @@ steps) fixed, so density effects can't hide data-volume effects.
 
 ## Results
 
-All five contributions pass, and the acceptance bar for each of them is quoted with their respective results below
+All five contributions pass, and the acceptance bar for each of them is quoted with their respective results below:
 
 - **C1** passes on all three criteria
   1. Regime-class accuracy 100% on the full
@@ -151,8 +151,7 @@ Assuming a clean checkout, these are the following respective timings for the pi
 
 ## Brief overview of the model
 
-A sparse reservoir of N = 500 nodes is governed by the three standardized Lorenz
-coordinates, including a fourth channel carrying the normalized parameter
+A sparse reservoir of N = 500 nodes is is driven by the three standardized Lorenz coordinates, in addition to a fourth channel carrying the normalized parameter
 
 ```math
 \mathbf{r}(t+\Delta t) \,=\, (1-\alpha)\,\mathbf{r}(t)
@@ -162,8 +161,8 @@ coordinates, including a fourth channel carrying the normalized parameter
 ```
 
 where p̂ is ρ mapped onto a fixed reference interval. The state and parameter
-columns of $W_{\mathrm{in}}$ are scaled separately by $\gamma_{\mathrm{in}}$ and $\gamma_ρ$, which turns out, matters more than I
-expected. $\gamma_ρ$ turned out to be the one lever that actually moved the C1 error,
+columns of $W_{\mathrm{in}}$ are scaled separately by $\gamma_{\mathrm{in}}$ and $\gamma_p$, which, as it turns out, matters more than I
+expected. $\gamma_p$ turned out to be the one lever that actually moved the C1 error,
 and it moved it in the opposite way from my initial guess. The readout is plain
 ridge regression solved in closed form
 
@@ -175,7 +174,7 @@ For the bifurcation diagram, the network runs cold. There is no ground-truth tra
 at the target ρ, just the parameter value and a free run.
 
 These are the following confirmed hyperparameters 
-- $\gamma_ρ$ = 0.1
+- $\gamma_p$ = 0.1
 - spectral radius = 0.6
 
 All remaining hyperparameters were kept at their documented prior values. These are the `ESNConfig` defaults, and they carry into every
