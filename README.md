@@ -145,7 +145,7 @@ Timing on the pinned stack, from a clean checkout: Figure 1 ≈ 8 min, Figures
 2–4 ≈ 22–27 min each, Figure 5 ≈ 15 s. The whole pipeline is a little over an
 hour end to end.
 
-## The model, briefly
+## Brief overview of the model
 
 A sparse reservoir of N = 500 nodes is driven by the three standardized Lorenz
 coordinates plus a fourth channel carrying the normalized parameter:
