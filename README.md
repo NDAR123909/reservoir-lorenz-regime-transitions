@@ -162,7 +162,7 @@ coordinates, including a fourth channel carrying the normalized parameter
 ```
 
 where p̂ is ρ mapped onto a fixed reference interval. The state and parameter
-columns of W_in are scaled separately (γ_in and γ_p), which turns out, matters more than I
+columns of ```W_{\mathrm{in}}``` are scaled separately (γ_in and γ_p), which turns out, matters more than I
 expected. γ_p turned out to be the one lever that actually moved the C1 error,
 and it moved it in the opposite way from my initial guess. The readout is plain
 ridge regression solved in closed form
