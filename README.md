@@ -31,36 +31,40 @@ steps) fixed, so density effects can't hide data-volume effects.
 
 All five contributions pass, and the acceptance bar for each of them is quoted with their respective results below
 
-- **C1** passes on all three criteria:
-  - regime-class accuracy 100% on the full
-  grid (bar: ≥ 95%), z-maxima amplitude RMSE 2.29% of the z-range on the
-  chaotic band ρ ≥ 24.74 (bar: ≤ 5%), largest-Lyapunov agreement 6.1%
-  (bar: ≤ 10%).
+- **C1** passes on all three criteria
+  1. Regime-class accuracy 100% on the full
+  grid (bar at ≥ 95%)
+  2. z-maxima amplitude RMSE 2.29% of the z-range on the
+  chaotic band ρ ≥ 24.74 (bar at ≤ 5%)
+  3. Largest-Lyapunov agreement 6.1% (bar at ≤ 10%).
   
 ![C1 bifurcation reconstruction](figures/fig1_c1_v2_bifurcation.png)
 
 *Predicted z-maxima (red) against the true diagram (grey). Dotted lines mark the
 four training ρ, the dashed line is the Hopf, and the shaded band is the coexistence
 region, excluded from the amplitude RMSE.*
-- **C2** is non-monotone: marginal reach falls from Δρ = 1.20 at W = 2 to 0.20
+- **C2** is non-monotone
+  - Marginal reach falls from Δρ = 1.20 at W = 2 to 0.20
   at W = 8, then rises to 1.50 at W = 10, while the absolute ceiling climbs
-  cleanly from 31.2 to 35.5. The upturn survives a Hopf-clamped robustness
+  cleanly from 31.2 to 35.5.
+  - The upturn survives a Hopf-clamped robustness
   check, so it's a real feature of the wide window, not sub-Hopf contamination.
-- **C3** saturates: from M = 3 samples on, reach is flat at Δρ ≈ 0.30 no matter
+- **C3** saturates
+  - From M = 3 samples onwards, the reach is flat at Δρ ≈ 0.30 no matter
   how densely the window is filled.
-- **C4** finds no window crosses the Hopf cleanly. Instead every window,
-  regardless of position, places the predicted collapse at ρ ≈ 24.10 — the
-  coexistence onset, where the chaotic attractor actually terminates —
-  overshooting the true Hopf (ρ ≈ 24.74) by the same 0.64.
-- **C5**: the pipeline is deterministic on the pinned stack; a clean checkout
+- **C4** finds that no window crosses the Hopf cleanly.
+  - Instead, every window, regardless of position, places the predicted collapse at ρ ≈ 24.10
+  - ρ ≈ 24.10 is the coexistence onset where the chaotic attractor actually terminates 
+  - This overshoots the true Hopf ρ ≈ 24.74 by the same 0.64.
+- **C5** finds that the pipeline is deterministic on the pinned stack, so a clean checkout
   rebuilds every figure bit for bit.
 
-The practical reading: reach is set by where the window edge sits, not how the
+In practical terms, the reach is set by where the window edge sits, not how the
 window is filled. Spend a fixed data budget on widening the range, not
 densifying it.
 
-One methodological note worth knowing before reading the code: the C1 amplitude
-RMSE is scored only on ρ ≥ 24.74. Below the Hopf the chaotic attractor coexists
+A methodological note worth knowing before reading the code is that the C1 amplitude
+RMSE is scored **only** on ρ ≥ 24.74. Below the Hopf, the chaotic attractor coexists
 with the stable fixed-point pair, so a single-initial-condition ground-truth
 envelope is multivalued there and the metric stops measuring what it claims to.
 The full-grid value of 7.61% is recorded while the full diagnosis is in the accompanying paper (scroll down to the very bottom for the BibTeX citation).
@@ -73,24 +77,24 @@ The full-grid value of 7.61% is recorded while the full diagnosis is in the acco
 | `src/reservoir.py` | Parameter-aware ESN (sparse reservoir, ridge readout) |
 | `src/metrics.py` | Valid prediction time and related metrics |
 | `src/training.py` | Segment builder, realization training, C1 acceptance test |
-| `src/sweep.py` | C2–C4 extrapolation-distance measurement and sweep definitions |
+| `src/sweep.py` | C2-C4 extrapolation-distance measurement and sweep definitions |
 | `experiments/run_c1.py`, `run_c1_v2.py` | C1 gate: train, cold-extrapolate, score (v2 = revised criterion, checkpoint/resume) |
-| `experiments/build_truth_cache.py` | Ground-truth cache shared by C2–C4 |
-| `experiments/run_sweep.py` | Chunked, resumable C2–C4 driver + finalization |
-| `experiments/make_figures.py`, `make_attractor_figure.py` | Figures 2–4 from result JSONs; Figure 5 (attractor climate) |
+| `experiments/build_truth_cache.py` | Ground-truth cache shared by C2-C4 |
+| `experiments/run_sweep.py` | Chunked, resumable C2-C4 driver with finalization |
+| `experiments/make_figures.py`, `make_attractor_figure.py` | Figures 2-4 from result JSONs; Figure 5 (attractor climate) |
 | `experiments/gate_one.py` | Score a single hyperparameter configuration |
 | `experiments/exp0*.ipynb` | Exploratory notebooks from early sessions |
 | `data/` | Shipped result cells and diagnostics (caches regenerate, gitignored) |
 | `figures/` | Output plots and per-sweep result JSONs |
 | `REPRODUCIBILITY.md` | Seeds, determinism, cached vs. regenerated artifacts, tolerances |
 
-The per-(config, realization) result cells under `data/C{2,3,4}_cells/` and the
-C1 prediction cells are shipped so figures rebuild in seconds. The ground-truth
-and segment caches are not shipped; they regenerate from logged seeds.
+The per-result cells (per config and realization) under `data/C{2,3,4}_cells/` and the
+C1 prediction cells are shipped so that the figures rebuild in seconds. The ground-truth
+and segment caches are not shipped, meaning that they regenerate from logged seeds.
 
 ## Reproducing the figures
 
-Bit-for-bit reproduction needs the following pinned environment: Python 3.12.3 with the
+One-to-one reproduction needs the following pinned environment: Python 3.12.3 with the
 pinned numpy, scipy, and matplotlib. Other versions give statistically
 equivalent runs, not identical ones — the sparse-matrix RNG and the eigensolver
 are version-sensitive (see `REPRODUCIBILITY.md`).
