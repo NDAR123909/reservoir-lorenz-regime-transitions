@@ -162,8 +162,8 @@ coordinates, including a fourth channel carrying the normalized parameter
 ```
 
 where p̂ is ρ mapped onto a fixed reference interval. The state and parameter
-columns of $W_{\mathrm{in}}$ are scaled separately by $\gamma_{\mathrm{in}}$ and $\gamma_p$, which turns out, matters more than I
-expected. γ_p turned out to be the one lever that actually moved the C1 error,
+columns of $W_{\mathrm{in}}$ are scaled separately by $\gamma_{\mathrm{in}}$ and $\gamma_ρ$, which turns out, matters more than I
+expected. $\gamma_ρ$ turned out to be the one lever that actually moved the C1 error,
 and it moved it in the opposite way from my initial guess. The readout is plain
 ridge regression solved in closed form
 
@@ -175,7 +175,7 @@ For the bifurcation diagram, the network runs cold. There is no ground-truth tra
 at the target ρ, just the parameter value and a free run.
 
 These are the following confirmed hyperparameters 
-- $\gamma_p$ = 0.1
+- $\gamma_ρ$ = 0.1
 - spectral radius = 0.6
 
 All remaining hyperparameters were kept at their documented prior values. These are the `ESNConfig` defaults, and they carry into every
