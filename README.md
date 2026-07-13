@@ -5,8 +5,8 @@ of ρ, with ρ supplied as an extra input channel, can it reconstruct the
 bifurcation diagram at values it never saw? And what controls how far past the
 training window it stays right?
 
-This repository contains the code, experiments, figures, and research notes for
-that question, and the README covers
+This repository contains the code, experiments, and figures for
+the question at hand, and the README covers
 what the project found and how to reproduce it.
 
 ![Attractor climate at unseen ρ: true Lorenz (grey) vs. cold-extrapolated ESN (red)](figures/fig5_attractor_climate.png)
@@ -29,7 +29,7 @@ steps) fixed, so density effects can't hide data-volume effects.
 
 ## Results
 
-All five contributions pass under methodology v2 (`paper/03_methodology_v2.pdf`).
+All five contributions pass, and the acceptance bar for each of them is quoted with their respective results below
 
 - **C1** passes on all three criteria: regime-class accuracy 100% on the full
   grid (bar: ≥ 95%), z-maxima amplitude RMSE 2.29% of the z-range on the
@@ -62,8 +62,7 @@ One methodological note worth knowing before reading the code: the C1 amplitude
 RMSE is scored only on ρ ≥ 24.74. Below the Hopf the chaotic attractor coexists
 with the stable fixed-point pair, so a single-initial-condition ground-truth
 envelope is multivalued there and the metric stops measuring what it claims to.
-The full diagnosis is in `paper/05_progress_log.md`; the full-grid value (7.61%)
-is kept on record.
+The full-grid value of 7.61% is recorded while the full diagnosis is in the accompanying paper (scroll down to the very bottom for the BibTeX citation).
 
 ## Layout
 
@@ -82,7 +81,6 @@ is kept on record.
 | `experiments/exp0*.ipynb` | Exploratory notebooks from early sessions |
 | `data/` | Shipped result cells and diagnostics (caches regenerate, gitignored) |
 | `figures/` | Output plots and per-sweep result JSONs |
-| `paper/` | Methodology, session progress logs (the detailed scientific record) |
 | `REPRODUCIBILITY.md` | Seeds, determinism, cached vs. regenerated artifacts, tolerances |
 
 The per-(config, realization) result cells under `data/C{2,3,4}_cells/` and the
@@ -172,13 +170,13 @@ at the target ρ, just the parameter value and a free run.
 
 Locked hyperparameters: γ_p = 0.1, spectral radius = 0.6, everything else at
 the documented priors. These are the `ESNConfig` defaults and carry into every
-sweep unchanged. Full details in `paper/03_methodology_v2.pdf`.
+sweep unchanged. Full details are in the accompanying paper/manuscript.
 
 ## BibTeX citation
 
 The accompanying paper is in preparation. Until it's published, cite the
-repository directly; the methodology and progress logs in `paper/` are the
-authoritative record.
-```
+repository directly.
 
+```
 *(BibTeX to be added on publication.)*
+```
