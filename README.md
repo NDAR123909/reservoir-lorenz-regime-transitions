@@ -178,5 +178,5 @@ The accompanying paper is in preparation. Until it's published, cite the
 repository directly.
 
 ```
-*(BibTeX to be added on publication.)*
+Placeholder here while waiting for BibTeX citation
 ```
