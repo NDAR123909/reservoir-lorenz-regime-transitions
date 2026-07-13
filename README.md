@@ -171,13 +171,14 @@ ridge regression solved in closed form
 W_{\mathrm{out}} = V R^{\top} \big( R R^{\top} + \lambda I \big)^{-1}
 ```
 
-For the bifurcation diagram the network runs cold. There is no ground-truth trajectory
+For the bifurcation diagram, the network runs cold. There is no ground-truth trajectory
 at the target ρ, just the parameter value and a free run.
 
 These are the following confirmed hyperparameters 
 - γ_p = 0.1
 - spectral radius = 0.6
-Everything else at the documented priors. These are the `ESNConfig` defaults and carry into every
+
+All remaining hyperparameters were kept at their documented prior values. These are the `ESNConfig` defaults, and they carry into every
 sweep unchanged. Full details are in the accompanying paper/manuscript.
 
 ## BibTeX citation
