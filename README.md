@@ -94,10 +94,10 @@ and segment caches are not shipped, meaning that they regenerate from logged see
 
 ## Reproducing the figures
 
-One-to-one reproduction needs the following pinned environment: Python 3.12.3 with the
+One-to-one reproduction needs the following pinned environment containing Python 3.12.3 with the
 pinned numpy, scipy, and matplotlib. Other versions give statistically
-equivalent runs, not identical ones — the sparse-matrix RNG and the eigensolver
-are version-sensitive (see `REPRODUCIBILITY.md`).
+equivalent runs and not identical ones given that the sparse-matrix RNG and the eigensolver
+are very much version-sensitive (see `REPRODUCIBILITY.md`).
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
@@ -105,22 +105,21 @@ pip install -r requirements.txt
 cd experiments
 ```
 
-Every runner checkpoints one cell per process and resumes, because the compute
-environment this was built in kills long single jobs. The shipped cells let you
-skip the long runs entirely.
+Because the compute environment this was built in kills long single jobs, every runner checkpoints one cell per process and resumes. 
+The shipped cells let you skip the long runs entirely.
 
-**Fast path** — Figures 2–4 in seconds from the shipped cells:
+**Fast path**: Figures 2-4 in seconds from the shipped cells:
 
 ```bash
 python run_sweep.py --mode finalize --sweep C3 --R 32   # same for C2 / C4
 python make_figures.py
 ```
 
-**Full path** — rebuild Figures 2–4 from scratch (this is what reproduces the
-cells bit for bit):
+**Full path**: Rebuild Figures 2-4 from scratch (this is what reproduces the
+cells bit-for-bit):
 
 ```bash
-python build_truth_cache.py                              # ~4-5 min, once
+python build_truth_cache.py                              # approximately 4-5 mins, once
 for s in C2 C3 C4; do
   while python run_sweep.py --mode run --sweep $s --R 32 --max-cells 60 \
         | grep -q "batch cap"; do :; done                # repeat until done
@@ -137,21 +136,23 @@ python run_c1_v2.py --mode run --upto 10 --batch 10      # repeat until 10/10
 python run_c1_v2.py --mode finalize --upto 10
 ```
 
-**Figure 5** needs no caches — it trains one realization fresh and free-runs at
+**Figure 5** needs no caches since it trains one realization fresh and free-runs at
 three unseen ρ:
 
 ```bash
-python make_attractor_figure.py                          # ~15 s
+python make_attractor_figure.py                          # roughly 15 seconds
 ```
 
-Timing on the pinned stack, from a clean checkout: Figure 1 ≈ 8 min, Figures
-2–4 ≈ 22–27 min each, Figure 5 ≈ 15 s. The whole pipeline is a little over an
-hour end to end.
+Assuming a clean checkout, these are the following respective timings for the pinned stack: 
+- Figure 1 takes roughly **8 mins**
+- Figures 2-4 take roughly **22–27 mins each**
+- Figure 5 takes roughly **15 seconds**.
+- The entire pipeline takes just **a little over an hour** end to end.
 
 ## Brief overview of the model
 
-A sparse reservoir of N = 500 nodes is driven by the three standardized Lorenz
-coordinates plus a fourth channel carrying the normalized parameter:
+A sparse reservoir of N = 500 nodes is governed by the three standardized Lorenz
+coordinates, including a fourth channel carrying the normalized parameter
 
 ```math
 \mathbf{r}(t+\Delta t) \,=\, (1-\alpha)\,\mathbf{r}(t)
@@ -161,20 +162,22 @@ coordinates plus a fourth channel carrying the normalized parameter:
 ```
 
 where p̂ is ρ mapped onto a fixed reference interval. The state and parameter
-columns of W_in are scaled separately (γ_in and γ_p), which matters more than I
-expected — γ_p turned out to be the one lever that actually moved the C1 error,
-and it moved it the opposite way from my initial guess. The readout is plain
-ridge regression solved in closed form:
+columns of W_in are scaled separately (γ_in and γ_p), which turns out, matters more than I
+expected. γ_p turned out to be the one lever that actually moved the C1 error,
+and it moved it in the opposite way from my initial guess. The readout is plain
+ridge regression solved in closed form
 
 ```math
 W_{\mathrm{out}} = V R^{\top} \big( R R^{\top} + \lambda I \big)^{-1}
 ```
 
-For the bifurcation diagram the network runs cold: no ground-truth trajectory
+For the bifurcation diagram the network runs cold. There is no ground-truth trajectory
 at the target ρ, just the parameter value and a free run.
 
-Locked hyperparameters: γ_p = 0.1, spectral radius = 0.6, everything else at
-the documented priors. These are the `ESNConfig` defaults and carry into every
+These are the following confirmed hyperparameters 
+- γ_p = 0.1
+- spectral radius = 0.6
+Everything else at the documented priors. These are the `ESNConfig` defaults and carry into every
 sweep unchanged. Full details are in the accompanying paper/manuscript.
 
 ## BibTeX citation
