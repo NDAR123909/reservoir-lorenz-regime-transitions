@@ -13,3 +13,4 @@ data/*.log
 #   data/C2_cells/  data/C3_cells/  data/C4_cells/   the 480 sweep cells
 #   data/c1v2_preds/                                 the 10 C1 prediction cells
 #   data/*.json                                      small gate/diagnostic logs
+paper/
