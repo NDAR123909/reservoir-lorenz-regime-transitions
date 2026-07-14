@@ -152,7 +152,7 @@ Assuming a clean checkout, these are the following respective timings for the pi
 
 ## Brief overview of the model
 
-A sparse reservoir of N = 500 nodes is is driven by the three standardized Lorenz coordinates, in addition to a fourth channel carrying the normalized parameter
+A sparse reservoir of N = 500 nodes is driven by the three standardized Lorenz coordinates, in addition to a fourth channel carrying the normalized parameter
 
 ```math
 \mathbf{r}(t+\Delta t) \,=\, (1-\alpha)\,\mathbf{r}(t)
