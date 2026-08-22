@@ -1,5 +1,6 @@
 """
-Figure 5, attractor climate at unseen rho, true Lorenz vs ESN cold extrapolation.
+Manuscript Figure 2 (file name fig5_* predates the manuscript numbering):
+attractor climate at unseen rho, true Lorenz vs ESN cold extrapolation.
 
 A qualitative companion to C1. The quantitative pass lives in the z-maxima
 metrics (run_c1_v2.py), and this figure shows the object those statistics
@@ -12,6 +13,11 @@ tracking. Past the valid prediction time a free-running ESN diverges from the
 true trajectory pointwise by construction, so the claim on display is that the
 reconstructed attractor has the right geometry, not that the paths overlay.
 
+Panels are labelled (a)-(f) in reading order, as JURPA requires for multi-part
+figures; which rho and which of truth/ESN each panel shows is carried by the
+caption. Rendered at 5.0 in wide -- INSERT AT 5.0 in, not 3.5 in, or the panel
+type drops below legibility.
+
 Deterministic end to end on the pinned stack (see REPRODUCIBILITY.md). Run:
     python make_attractor_figure.py          # ~40 s, writes figures/fig5_attractor_climate.png
 """
@@ -20,6 +26,19 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+# Sized for a 5.0 in printed width at 100% insertion, so authored point sizes
+# land 1:1 on the page against ~10 pt body type.
+plt.rcParams.update({
+    "font.size":        8,
+    "axes.labelsize":   8,
+    "axes.titlesize":   8,
+    "xtick.labelsize":  6.5,
+    "ytick.labelsize":  6.5,
+    "legend.fontsize":  6.5,
+    "figure.dpi":       300,
+    "savefig.dpi":      300,
+})
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import lorenz, training
@@ -50,7 +69,7 @@ def main():
 
     # deterministic true trajectories, one seeded IC per rho
     ic_rng = np.random.default_rng(MASTER + 777)
-    fig = plt.figure(figsize=(11.5, 7.2))
+    fig = plt.figure(figsize=(5.0, 3.4))
     for col, rho in enumerate(RHO_SHOW):
         x0 = ic_rng.uniform(-15, 15, size=3)
         true_tr = lorenz.integrate_esn_grid(rho, N_FREE, transient_time=80.0, x0=x0)
@@ -59,31 +78,32 @@ def main():
         esn_tr = esn.cold_extrapolate(rho, n_free=N_FREE, discard=DISCARD,
                                       seed=SEED, primer_hat=primers[j])
 
-        rel = ("just above the Hopf" if col == 0 else
-               "inside the training range" if col == 1 else
-               "beyond the training range")
-        for row, (tr, c, tag) in enumerate(
-                [(true_tr, TRUTH_C, "true Lorenz"),
-                 (esn_tr, ESN_C, "ESN, cold extrapolation")]):
+        # row 0 = true Lorenz, row 1 = ESN cold extrapolation; the caption keys
+        # (a)-(f) to the row/rho pairing.
+        for row, (tr, c) in enumerate([(true_tr, TRUTH_C), (esn_tr, ESN_C)]):
             ax = fig.add_subplot(2, 3, row * 3 + col + 1, projection="3d")
-            ax.plot(tr[:, 0], tr[:, 1], tr[:, 2], color=c, lw=0.35, alpha=0.85)
-            ax.set_title(f"{tag}\n$\\rho={rho:g}$ ({rel})" if row == 0
-                         else tag, fontsize=8.5, pad=-2)
-            ax.set_xlabel("x", fontsize=7, labelpad=-6)
-            ax.set_ylabel("y", fontsize=7, labelpad=-6)
-            ax.set_zlabel("z", fontsize=7, labelpad=-6)
-            ax.tick_params(labelsize=6, pad=-2)
+            # rasterized so the vector PDF stays small; the text stays vector
+            ax.plot(tr[:, 0], tr[:, 1], tr[:, 2], color=c, lw=0.35, alpha=0.85,
+                    rasterized=True)
+            ax.set_xlabel("x", fontsize=8, labelpad=-4)
+            ax.set_ylabel("y", fontsize=8, labelpad=-4)
+            ax.set_zlabel("z", fontsize=8, labelpad=-4)
+            # four ticks per axis: at 1.7 in a panel, five collide
+            ax.locator_params(nbins=4)
+            ax.tick_params(labelsize=6.5, pad=-2)
             ax.view_init(elev=18, azim=-60)
             ax.set_box_aspect((1, 1, 0.9))
+            ax.text2D(0.02, 0.95, f"({'abcdef'[row * 3 + col]})",
+                      transform=ax.transAxes, fontsize=9, fontweight="bold")
         print(f"[fig5] rho={rho:g} done ({time.time()-t0:.0f}s)")
 
-    fig.suptitle("Attractor climate at unseen $\\rho$, true system vs ESN cold "
-                 "extrapolation\n(free-run geometry comparison, one realization, "
-                 "training $\\rho\\in$ {24.56, 26.06, 27.56, 29.06})",
-                 fontsize=11)
-    fig.tight_layout(rect=(0, 0, 1, 0.93))
-    fig.savefig(OUT, dpi=140)
-    print(f"[fig5] figure -> {os.path.relpath(OUT)}   ({time.time()-t0:.0f}s total)")
+    # matplotlib's layout engines mis-measure 3-D bounding boxes, which clips the
+    # right column's z labels; place the grid explicitly instead.
+    fig.subplots_adjust(left=0.00, right=0.93, top=0.98, bottom=0.05,
+                        wspace=0.00, hspace=0.14)
+    for ext in ("png", "pdf"):
+        fig.savefig(os.path.splitext(OUT)[0] + "." + ext, dpi=300)
+    print(f"[fig5] figure -> {os.path.relpath(OUT)} (+ .pdf)   ({time.time()-t0:.0f}s total)")
 
 
 if __name__ == "__main__":
