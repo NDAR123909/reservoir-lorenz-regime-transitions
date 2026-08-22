@@ -19,6 +19,20 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import numpy as np
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+# Sized for a 3.3 in printed width at 100% insertion, so authored point sizes
+# land 1:1 on the page against ~10 pt body type.
+plt.rcParams.update({
+    "font.size":        8,
+    "axes.labelsize":   8,
+    "axes.titlesize":   8,
+    "xtick.labelsize":  7,
+    "ytick.labelsize":  7,
+    "legend.fontsize":  6.5,
+    "figure.dpi":       300,
+    "savefig.dpi":      300,
+})
+
 import lorenz, training
 from reservoir import ESNConfig
 
@@ -106,7 +120,7 @@ def finalize(upto, n_free):
 
 
 def _plot(agg, truth, m, passed, path):
-    fig, ax = plt.subplots(1, 1, figsize=(9, 5.5))
+    fig, ax = plt.subplots(1, 1, figsize=(3.3, 2.0))
     for rho, zm in zip(truth["rho"], truth["zmax"]):
         if zm.size:
             ax.plot(np.full(zm.size, rho), zm, ".", color="0.55", ms=1.4,
@@ -117,33 +131,36 @@ def _plot(agg, truth, m, passed, path):
                     alpha=0.35, rasterized=True)
     ax.axvline(training.HOPF_RHO, color="#2c3e50", lw=1.0, ls="--", alpha=0.8)
     ax.axvspan(RHO_GRID.min(), training.HOPF_RHO, color="0.85", alpha=0.35, zorder=0)
-    _y0, _y1 = ax.get_ylim()
-    ax.text(24.84, 0.80, "Hopf  $\\rho\\approx24.74$",
+    # identifies which vertical is the Hopf; the shaded coexistence band and the
+    # RMSE scoping are explained in the caption, not annotated on the axes.
+    ax.text(24.84, 0.02, "Hopf  $\\rho\\approx24.74$",
             transform=ax.get_xaxis_transform(),
-            fontsize=8, rotation=0, va="top", ha="left", color="#2c3e50",
-            bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="0.8", alpha=0.9))
-    ax.annotate("coexistence region\n(excluded from amplitude RMSE)",
-                xy=(24.37, _y0 + 0.13 * (_y1 - _y0)),
-                xytext=(25.55, _y0 + 0.05 * (_y1 - _y0)),
-                fontsize=7, va="center", ha="left", color="0.4",
-                arrowprops=dict(arrowstyle="->", color="0.5", lw=0.8))
+            fontsize=6.0, va="bottom", ha="left", color="#2c3e50")
     for rt in RHO_TRAIN:
         ax.axvline(rt, color="#16a085", lw=0.8, ls=":", alpha=0.6)
-    ax.plot([], [], ".", color="0.55", ms=6, label="ground truth")
-    ax.plot([], [], ".", color="#c0392b", ms=6, label="ESN (cold extrapolation)")
+    ax.plot([], [], ".", color="0.55", ms=4, label="ground truth")
+    ax.plot([], [], ".", color="#c0392b", ms=4, label="ESN (cold extrapolation)")
     ax.plot([], [], ":", color="#16a085", label="training $\\rho$")
     ax.set_xlabel("$\\rho$ (Rayleigh parameter)")
     ax.set_ylabel("successive $z$-maxima")
-    ax.set_title(f"C1 reproduction (methodology v2), predicted vs true "
-                 f"({'PASS' if passed else 'FAIL'})\n"
-                 f"class acc {m['class_acc']*100:.1f}% (full grid), "
-                 f"z-max RMSE {m['zmax_rmse_frac']*100:.2f}% of range "
-                 f"($\\rho\\geq24.74$)")
-    ax.legend(loc="upper left", fontsize=8, framealpha=0.9)
+    # legend and the Hopf label are held a little below the base figure type so
+    # they stay clear of the scatter at 3.3 in
+    ax.legend(loc="upper left", fontsize=6.0, framealpha=0.92, handlelength=1.0,
+              handletextpad=0.4, borderpad=0.25, labelspacing=0.25)
     fig.tight_layout()
-    fig.savefig(path, dpi=140)
+    stem = os.path.splitext(path)[0]
+    written, stale = [], []
+    for ext in ("png", "pdf"):
+        try:
+            fig.savefig(f"{stem}.{ext}", dpi=300)
+            written.append("." + ext)
+        except PermissionError:      # open in a viewer -> locked on Windows
+            stale.append("." + ext)
     plt.close(fig)
-    print(f"[c1v2] figure -> {path}")
+    print(f"[c1v2] figure -> {stem} {', '.join(written)}")
+    if stale:
+        print(f"[c1v2]   !! {'/'.join(stale)} LOCKED (open in a viewer?) "
+              f"-- LEFT STALE, close it and re-run")
 
 
 if __name__ == "__main__":
