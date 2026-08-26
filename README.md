@@ -81,7 +81,8 @@ The full-grid value of 7.61% is recorded while the full diagnosis is in the acco
 | `experiments/run_c1.py`, `run_c1_v2.py` | C1 gate: train, cold-extrapolate, score (v2 = revised criterion, checkpoint/resume) |
 | `experiments/build_truth_cache.py` | Ground-truth cache shared by C2-C4 |
 | `experiments/run_sweep.py` | Chunked, resumable C2-C4 driver with finalization |
-| `experiments/make_figures.py`, `make_attractor_figure.py` | Figures 2-4 from result JSONs; Figure 5 (attractor climate) |
+| `experiments/make_figures.py`, `make_attractor_figure.py` | fig2/fig3/fig4 from result JSONs; fig5 attractor climate |
+| `experiments/make_merged_figure.py` | Two-panel C2+C3 block used as the paper's Figure 3 |
 | `experiments/gate_one.py` | Score a single hyperparameter configuration |
 | `experiments/exp0*.ipynb` | Exploratory notebooks from early sessions |
 | `experiments/diag_*.py`, `gate_sweep.py` | Gate-search and coexistence-region diagnostics |
