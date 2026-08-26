@@ -85,7 +85,7 @@ def main():
             # rasterized so the vector PDF stays small; the text stays vector
             ax.plot(tr[:, 0], tr[:, 1], tr[:, 2], color=c, lw=0.35, alpha=0.85,
                     rasterized=True)
-                        ax.set_xlabel("x", fontsize=8, labelpad=-9)
+            ax.set_xlabel("x", fontsize=8, labelpad=-9)
             ax.set_ylabel("y", fontsize=8, labelpad=-9)
             ax.set_zlabel("z", fontsize=8, labelpad=-5)
             # One frame for all six panels, so (a)-(c) and (d)-(f) are directly
