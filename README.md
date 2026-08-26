@@ -93,14 +93,20 @@ The per-result cells (per config and realization) under `data/C{2,3,4}_cells/` a
 C1 prediction cells are shipped so that the figures rebuild in seconds. The ground-truth
 and segment caches are not shipped, meaning that they regenerate from logged seeds.
 
+The repo numbers its figures by contribution, while the paper numbers them by order of
+appearance. Bare "Figure N" references elsewhere in this README mean the repo's.
+
 | Paper | Repo file | Contribution |
 |---|---|---|
-| Figure 1 | fig1_c1_v2_bifurcation.png | C1 |
-| Figure 2 | fig5_attractor_climate.png | C1 (illustrative) |
-| Figure 3(a), 3(b) | fig_merged_range_density.png | C2, C3 |
-| Figure 4 | fig4_c4_position.png | C4 |
+| Figure 1 | `fig1_c1_v2_bifurcation.png` | C1 |
+| Figure 2 | `fig5_attractor_climate.png` | C1 (illustrative) |
+| Figure 3(a), 3(b) | `fig_merged_range_density.png` | C2, C3 |
+| Figure 4 | `fig4_c4_position.png` (right panel) | C4 |
 
-Even though C2 and C3 appear here as separate figures, the paper merges them into a two-panel Figure 3 to fit its four-page limit.
+Even though C2 and C3 appear here as separate figures, the paper merges them into
+a two-panel Figure 3 to fit its four-page limit. The paper's Figure 4 uses only the
+right panel of `fig4_c4_position.png`; the left panel's strict across-Hopf depth is
+zero at every position, so the paper states it in the caption instead of plotting it.
 
 ## Reproducing the figures
 
