@@ -159,7 +159,7 @@ python run_c1_v2.py --mode finalize --upto 10
 three unseen ρ:
 
 ```bash
-python make_attractor_figure.py                          # roughly 15-40 seconds
+python make_attractor_figure.py                          # roughly 15 seconds
 ```
 
 Assuming a clean checkout, these are the following respective timings for the pinned stack: 
