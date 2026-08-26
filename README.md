@@ -100,6 +100,8 @@ and segment caches are not shipped, meaning that they regenerate from logged see
 | Figure 3(a), 3(b) | fig_merged_range_density.png | C2, C3 |
 | Figure 4 | fig4_c4_position.png | C4 |
 
+Even though C2 and C3 appear here as separate figures, the paper merges them into a two-panel Figure 3 to fit its four-page limit.
+
 ## Reproducing the figures
 
 One-to-one reproduction needs the following pinned environment containing Python 3.12.3 with the
