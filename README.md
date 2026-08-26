@@ -130,6 +130,7 @@ The shipped cells let you skip the long runs entirely.
 ```bash
 python run_sweep.py --mode finalize --sweep C3 --R 32   # same for C2 / C4
 python make_figures.py
+python make_merged_figure.py                             # paper Figure 3, instant
 ```
 
 **Full path**: Rebuild Figures 2-4 from scratch (this is what reproduces the
@@ -157,7 +158,7 @@ python run_c1_v2.py --mode finalize --upto 10
 three unseen ρ:
 
 ```bash
-python make_attractor_figure.py                          # roughly 15 seconds
+python make_attractor_figure.py                          # roughly 15-40 seconds
 ```
 
 Assuming a clean checkout, these are the following respective timings for the pinned stack: 
