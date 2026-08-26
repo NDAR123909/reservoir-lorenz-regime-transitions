@@ -85,12 +85,20 @@ def main():
             # rasterized so the vector PDF stays small; the text stays vector
             ax.plot(tr[:, 0], tr[:, 1], tr[:, 2], color=c, lw=0.35, alpha=0.85,
                     rasterized=True)
-            ax.set_xlabel("x", fontsize=8, labelpad=-4)
-            ax.set_ylabel("y", fontsize=8, labelpad=-4)
-            ax.set_zlabel("z", fontsize=8, labelpad=-4)
-            # four ticks per axis: at 1.7 in a panel, five collide
-            ax.locator_params(nbins=4)
-            ax.tick_params(labelsize=6.5, pad=-2)
+                        ax.set_xlabel("x", fontsize=8, labelpad=-9)
+            ax.set_ylabel("y", fontsize=8, labelpad=-9)
+            ax.set_zlabel("z", fontsize=8, labelpad=-5)
+            # One frame for all six panels, so (a)-(c) and (d)-(f) are directly
+            # comparable and the tick choice does not vary panel to panel.
+            ax.set_xlim(-22, 22)
+            ax.set_ylim(-30, 30)
+            ax.set_zlim(0, 55)
+            # x and y carry no quantitative claim here, and their numerals
+            # collide at the front corner at this panel size; only z is labelled.
+            ax.set_xticks([-20, 0, 20]); ax.set_xticklabels([])
+            ax.set_yticks([-20, 0, 20]); ax.set_yticklabels([])
+            ax.set_zticks([0, 20, 40])
+            ax.tick_params(axis="z", labelsize=6.5, pad=-1)
             ax.view_init(elev=18, azim=-60)
             ax.set_box_aspect((1, 1, 0.9))
             ax.text2D(0.02, 0.95, f"({'abcdef'[row * 3 + col]})",
@@ -99,8 +107,8 @@ def main():
 
     # matplotlib's layout engines mis-measure 3-D bounding boxes, which clips the
     # right column's z labels; place the grid explicitly instead.
-    fig.subplots_adjust(left=0.00, right=0.93, top=0.98, bottom=0.05,
-                        wspace=0.00, hspace=0.14)
+    fig.subplots_adjust(left=0.00, right=0.95, top=0.98, bottom=0.05,
+                        wspace=0.10, hspace=0.14)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.splitext(OUT)[0] + "." + ext, dpi=300)
     print(f"[fig5] figure -> {os.path.relpath(OUT)} (+ .pdf)   ({time.time()-t0:.0f}s total)")
