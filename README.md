@@ -128,7 +128,11 @@ The shipped cells let you skip the long runs entirely.
 **Fast path**: Figures 2-4 in seconds from the shipped cells:
 
 ```bash
-python run_sweep.py --mode finalize --sweep C3 --R 32   # same for C2 / C4
+python build_truth_cache.py                              # approximately 4-5 mins but only runs once
+for s in C2 C3 C4; do
+  while python run_sweep.py --mode run --sweep $s --R 32 --max-cells 60 \
+        | grep -q "batch cap"; do :; done                # repeat until done
+  python run_sweep.py --mode finalize --sweep $s --R 32
 done
 python make_figures.py
 python make_merged_figure.py                             # paper Figure 3, instant
