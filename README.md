@@ -93,6 +93,13 @@ The per-result cells (per config and realization) under `data/C{2,3,4}_cells/` a
 C1 prediction cells are shipped so that the figures rebuild in seconds. The ground-truth
 and segment caches are not shipped, meaning that they regenerate from logged seeds.
 
+| Paper | Repo file | Contribution |
+|---|---|---|
+| Figure 1 | fig1_c1_v2_bifurcation.png | C1 |
+| Figure 2 | fig5_attractor_climate.png | C1 (illustrative) |
+| Figure 3(a), 3(b) | fig_merged_range_density.png | C2, C3 |
+| Figure 4 | fig4_c4_position.png | C4 |
+
 ## Reproducing the figures
 
 One-to-one reproduction needs the following pinned environment containing Python 3.12.3 with the
