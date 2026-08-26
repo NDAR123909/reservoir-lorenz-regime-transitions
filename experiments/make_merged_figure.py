@@ -11,8 +11,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-FIGS = "/home/claude/newrepo/reservoir-lorenz-regime-transitions-main/figures"
-OUT = "/home/claude/build/fig_merged_range_density.png"
+HERE = os.path.dirname(__file__)
+FIGS = os.path.join(HERE, "..", "figures")
+OUT = os.path.join(FIGS, "fig_merged_range_density.png")
 
 RED, TEAL, GREY = "#c0392b", "#16a085", "#7f8c8d"
 LEG = dict(frameon=True, framealpha=0.9, fontsize=7, borderpad=0.3,
@@ -101,5 +102,3 @@ for ax, lab in ((axA, "(a)"), (axB, "(b)")):
 fig.tight_layout(pad=0.5, w_pad=1.6, rect=(0,0,1,0.97))
 fig.savefig(OUT, dpi=300)
 print("wrote", OUT)
-from PIL import Image
-im = Image.open(OUT); print("size", im.size, "ratio", im.size[0]/im.size[1])
