@@ -46,7 +46,7 @@ from reservoir import ESNConfig
 
 MASTER = 20260613
 RHO_TRAIN = [24.56, 26.06, 27.56, 29.06]     # the locked C1 training set
-L_TOTAL = 120_000                            # fixed data budget (methodology 4)
+L_TOTAL = 120_000                            # fixed data budget
 RHO_SHOW = [25.0, 28.0, 31.0]                # unseen, near Hopf / interior / beyond range
 N_FREE, DISCARD, SEED = 6000, 1500, 0        # identical to predicted_bifurcation
 OUT = os.path.join(os.path.dirname(__file__), "..", "figures",
