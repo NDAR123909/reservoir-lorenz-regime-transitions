@@ -129,6 +129,7 @@ The shipped cells let you skip the long runs entirely.
 
 ```bash
 python run_sweep.py --mode finalize --sweep C3 --R 32   # same for C2 / C4
+done
 python make_figures.py
 python make_merged_figure.py                             # paper Figure 3, instant
 ```
