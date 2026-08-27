@@ -14,3 +14,4 @@ data/*.log
 #   data/c1v2_preds/                                 the 10 C1 prediction cells
 #   data/*.json                                      small gate/diagnostic logs
 paper/
+figures/*.pdf
