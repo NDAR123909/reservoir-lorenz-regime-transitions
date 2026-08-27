@@ -80,7 +80,7 @@ def _scatter(ax, xs, per_lists, color, jitter):
 
 
 def fig2():
-    """Manuscript Figure 3(a) and Manuscript Figure 3(b) -- extrapolation distance vs training-range width."""
+    """Manuscript Figure 3(a) -- extrapolation distance vs training-range width."""
     r = _load("c2")
     pts = sorted(r["points"], key=lambda p: p["x"])
     x = np.array([p["x"] for p in pts])
@@ -116,7 +116,7 @@ def fig2():
 
 
 def fig3():
-    """Manuscript Figure 4 -- extrapolation distance vs sample density."""
+    """Manuscript Figure 3(b) -- extrapolation distance vs sample density."""
     r = _load("c3")
     pts = sorted(r["points"], key=lambda p: p["x"])
     x = np.array([p["x"] for p in pts])
@@ -149,7 +149,7 @@ def fig3():
 
 
 def fig4():
-    """Manuscript Figure 5 -- where the collapse is predicted, vs window position.
+    """Manuscript Figure 4 -- where the collapse is predicted, vs window position.
 
     Single panel. The strict across-Hopf depth is zero at every d, which the
     Results text states in one sentence; it does not need its own axes.
