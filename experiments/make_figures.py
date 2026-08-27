@@ -1,15 +1,15 @@
 """
 make_figures.py
 ===============
-Manuscript Figures 3, 4, and 5 (internally C2, C3, C4), each with the section-5
-realization spread drawn as a band. Reads the per-sweep result JSONs written by
+Manuscript Figure 3(a), Manuscript Figure 3(b), and Manuscript Figure 4 (internally C2, C3, C4), 
+each with the section-5 realization spread drawn as a band. Reads the per-sweep result JSONs written by
 run_sweep.py --mode finalize, plus the C4 cell store for the per-realization
 predicted-transition scatter.
 
 File-to-manuscript numbering (the filenames predate the manuscript):
-    fig2_c2_range.png    -> Figure 3, range width
-    fig3_c3_density.png  -> Figure 4, sample density
-    fig4_c4_position.png -> Figure 5, across the Hopf
+    fig2_c2_range.png    -> Figure 3(a) (via make_merged_figure.py), range width
+    fig3_c3_density.png  -> Figure 3(b) (via make_merged_figure.py), sample density
+    fig4_c4_position.png -> Figure 4, across the Hopf
 
 Figures are rendered at the width they occupy on the JURPA page (3.2 in) and
 must be inserted at 100%. Interpretation lives in the captions and body text,
@@ -80,7 +80,7 @@ def _scatter(ax, xs, per_lists, color, jitter):
 
 
 def fig2():
-    """Manuscript Figure 3 -- extrapolation distance vs training-range width."""
+    """Manuscript Figure 3(a) and Manuscript Figure 3(b) -- extrapolation distance vs training-range width."""
     r = _load("c2")
     pts = sorted(r["points"], key=lambda p: p["x"])
     x = np.array([p["x"] for p in pts])
