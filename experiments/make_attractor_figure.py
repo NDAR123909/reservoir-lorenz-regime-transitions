@@ -19,7 +19,7 @@ caption. Rendered at 5.0 in wide -- INSERT AT 5.0 in, not 3.5 in, or the panel
 type drops below legibility.
 
 Deterministic end to end on the pinned stack (see REPRODUCIBILITY.md). Run:
-    python make_attractor_figure.py          # ~40 s, writes figures/fig5_attractor_climate.png
+    python make_attractor_figure.py          # ~15 s, writes figures/fig5_attractor_climate.png
 """
 import sys, os, time
 import numpy as np
