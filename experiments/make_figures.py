@@ -1,10 +1,10 @@
 """
 make_figures.py
 ===============
-Manuscript Figure 3(a), Manuscript Figure 3(b), and Manuscript Figure 4 (internally C2, C3, C4), 
-each with the section-5 realization spread drawn as a band. Reads the per-sweep result JSONs written by
-run_sweep.py --mode finalize, plus the C4 cell store for the per-realization
-predicted-transition scatter.
+Manuscript Figures 3(a), 3(b), and 4 (internally C2, C3, C4) 
+each with the section-5 realization spread drawn as a band. 
+Reads the per-sweep result JSONs written by run_sweep.py --mode 
+finalize, plus the C4 cell store for the per-realization predicted-transition scatter.
 
 File-to-manuscript numbering (the filenames predate the manuscript):
     fig2_c2_range.png    -> Figure 3(a) (via make_merged_figure.py), range width
