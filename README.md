@@ -102,12 +102,11 @@ appearance. Bare "Figure N" references elsewhere in this README mean the repo's.
 | Figure 1 | `fig1_c1_v2_bifurcation.png` | C1 |
 | Figure 2 | `fig5_attractor_climate.png` | C1 (illustrative) |
 | Figure 3(a), 3(b) | `fig_merged_range_density.png` | C2, C3 |
-| Figure 4 | `fig4_c4_position.png` (right panel) | C4 |
+| Figure 4 | `fig4_c4_position.png` | C4 |
 
 Even though C2 and C3 appear here as separate figures, the paper merges them into
-a two-panel Figure 3 to fit its four-page limit. The paper's Figure 4 uses only the
-right panel of `fig4_c4_position.png`; the left panel's strict across-Hopf depth is
-zero at every position, so the paper states it in the caption instead of plotting it.
+a two-panel Figure 3 to fit its four-page limit. The strict across-Hopf depth is zero 
+at every window position, so it is stated in the Results text rather than plotted.
 
 ## Reproducing the figures
 
