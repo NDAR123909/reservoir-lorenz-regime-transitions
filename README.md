@@ -54,8 +54,8 @@ region, excluded from the amplitude RMSE.*
   how densely the window is filled.
 - **C4** finds that no window crosses the Hopf cleanly.
   - Instead, every window, regardless of position, places the predicted collapse at ρ ≈ 24.10
-  - ρ ≈ 24.10 is the coexistence onset where the chaotic attractor actually terminates 
-  - This overshoots the true Hopf ρ ≈ 24.74 by the same 0.64.
+  - That overshoots the true Hopf at ρ ≈ 24.74 by the same 0.64, landing on the
+  coexistence onset at ρ ≈ 24.06 where the chaotic attractor actually terminates
 - **C5** finds that the pipeline is deterministic on the pinned stack, so a clean checkout
   rebuilds every figure bit for bit.
 
@@ -201,7 +201,17 @@ sweep unchanged. The full details are in the accompanying paper/manuscript.
 ## BibTeX citation
 
 The accompanying paper is in preparation. Until it's published, cite the
-repository directly.
+repository directly from here.
+
+```bibtex
+@software{riego_reservoir_lorenz_2026,
+  author = {Riego, Noah D.},
+  title  = {reservoir-lorenz-regime-transitions: Parameter-Aware Echo State
+            Networks for Lorenz Regime Transitions},
+  year   = {2026},
+  url    = {https://github.com/ndar123909/reservoir-lorenz-regime-transitions}
+}
+```
 
 ```
 Placeholder here while waiting for BibTeX citation
