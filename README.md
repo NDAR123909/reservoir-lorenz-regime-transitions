@@ -212,7 +212,3 @@ repository directly from here.
   url    = {https://github.com/ndar123909/reservoir-lorenz-regime-transitions}
 }
 ```
-
-```
-Placeholder here while waiting for BibTeX citation
-```
