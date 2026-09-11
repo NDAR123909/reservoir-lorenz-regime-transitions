@@ -1,9 +1,9 @@
 """
 Lorenz 1963 system: fixed-step RK4 integrator, z-maxima return map, largest
 Lyapunov exponent (Benettin), and the numerical bifurcation-map / regime
-classifier specified in methodology section 2.3.
+classifier described below.
 
-Conventions locked in 03_methodology.pdf:
+Sign and parameter conventions follow Lorenz (1963):
     dx/dt = sigma (y - x)
     dy/dt = x (rho - z) - y
     dz/dt = x y - beta z
@@ -152,8 +152,8 @@ def largest_lyapunov(rho: float,
     return log_sum / (n_renorm * steps_per_renorm * h)
 
 
-# Regime classifier (methodology 2.3)                                          
-# class thresholds (methodology 3.3): chaotic above +0.01, fixed point below
+# Regime classifier                                           
+# class thresholds: chaotic above +0.01, fixed point below
 # -0.01, periodic in between; plus a variance-collapse test for fixed points.
 LYAP_CHAOS = 0.01
 LYAP_FP = -0.01
@@ -215,7 +215,7 @@ def bifurcation_map(rho_grid: np.ndarray,
                     with_lyap: bool = True,
                     rng: np.random.Generator | None = None) -> dict:
     """
-    Numerical bifurcation map of methodology 2.3. For each rho on the grid:
+    Numerical bifurcation map. For each rho on the grid:
     integrate past the transient, collect z-maxima, estimate the largest
     Lyapunov exponent, and classify the regime.
 
@@ -240,7 +240,7 @@ def bifurcation_map(rho_grid: np.ndarray,
     }
 
 
-# Known landmarks (methodology 2.3), used as a self-check on the classifier.
+# Known landmarks from the literature, used as a self-check on the classifier.
 LANDMARKS = {
     "pitchfork": 1.0,
     "homoclinic_explosion": 13.93,
