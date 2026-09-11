@@ -140,14 +140,14 @@ def c1_metrics(agg, truth, rmse_rho_min: float | None = HOPF_RHO):
           chaotic band rho >= rmse_rho_min                  (target <= 0.05)
         - largest-Lyapunov agreement in the chaotic band    (target ~10%)
 
-    The amplitude RMSE is scoped to rho >= rmse_rho_min (the Hopf landmark) by the
-    methodology-v2 revision: below the Hopf the Lorenz system sits in the
-    attractor-coexistence region (methodology 2.4), where the true z-maxima
-    envelope is not single-valued (it depends on the initial condition), so a
-    single-IC ground-truth envelope is not a well-posed amplitude target there.
-    Regime-class accuracy is still scored across the entire grid, and the
-    downward-across-Hopf behaviour is the dedicated subject of C4. Pass
-    rmse_rho_min=None to recover the original full-grid (v1) metric.
+    The amplitude RMSE is scoped to rho >= rmse_rho_min (the Hopf landmark): 
+    below the Hopf the Lorenz system sits in the attractor-coexistence region 
+    (methodology 2.4), where the true z-maxima envelope is not single-valued 
+    (it depends on the initial condition), so a single-IC ground-truth envelope 
+    is not a well-posed amplitude target there. Regime-class accuracy is still 
+    scored across the entire grid, and the downward-across-Hopf behaviour is the 
+    dedicated subject of C4. Pass rmse_rho_min=None to recover the original full-grid 
+    (v1) metric.
     """
     rho = np.asarray(truth["rho"], dtype=float)
     # ---- regime class accuracy (full grid) ----
