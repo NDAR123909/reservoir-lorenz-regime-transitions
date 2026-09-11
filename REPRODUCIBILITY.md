@@ -1,6 +1,6 @@
 # Reproducibility
 
-This repo is built to reproduce from a clean checkout. On the pinned environment, a fresh run rebuilds the shipped figures bit-for-bit and not just statistically. This file records the seeds, the determinism guarantees, and what is cached versus regenerated.
+This repo is built to reproduce from a clean checkout. On the pinned environment, a fresh run rebuilds the shipped figures bit-for-bit, not just statistically. This file records the seeds, the determinism guarantees, and what is cached versus regenerated.
 
 ## Environment
 
