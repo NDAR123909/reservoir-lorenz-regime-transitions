@@ -3,7 +3,7 @@ C2-C4 sweep machinery: the extrapolation-distance measurement of methodology
 section 3.5 and the three sampling sweeps of section 4, run against the locked
 architecture (ESNConfig defaults = post-gate locked values, methodology v2 1.5).
 
-The C1 gate is closed (Session 6); this module never touches a hyperparameter.
+The C1 gate is closed; this module never touches a hyperparameter.
 It varies only the three sampling choices the literature fixes for convenience:
 
     C2  training-range WIDTH      (density held at 1 sample / rho-unit)
@@ -85,7 +85,7 @@ def sweep_points(which: str):
                             direction="up"))
         return out
     if which == "C2clamp":
-        # Robustness check for the W=10 / section-2.4 tension (Session 8).
+        # Robustness check for the W=10 tension described below.
         # C2_W10's window [24, 34] puts its lowest training sample at rho = 24,
         # below the Hopf at 24.74, which section 2.4 excludes from training. This
         # variant is that same window (same center, width, upper edge, and
