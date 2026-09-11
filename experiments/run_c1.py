@@ -17,7 +17,6 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-import lorenz
 import training
 from reservoir import ESNConfig
 
