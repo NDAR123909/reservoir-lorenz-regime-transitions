@@ -3,7 +3,7 @@ Precompute the ground-truth cache the C2/C3 same-class VPT measurement needs:
 for each rho on a master grid, a seeded ground-truth trajectory (warmup + free
 run), its valid ground-truth time (VGTT, the methodology-3.1 cap), and its
 qualitative class. The cache is deterministic from the seed stream, so it is not
-shipped in the repo tarball -- it is rebuilt here and reused by every sweep cell.
+shipped in the repo tarball; it is rebuilt here and reused by every sweep cell.
 
 Built once; resumable (skips rho already on disk). Single output file
 data/truth_cache.pkl.
