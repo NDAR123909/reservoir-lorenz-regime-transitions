@@ -10,7 +10,7 @@ shipped in the repo tarball -- it is rebuilt here and reused by every sweep cell
 Built once; resumable (skips rho already on disk). Single output file
 data/truth_cache.pkl.
 """
-import sys, os, pickle, time, argparse
+import sys, os, pickle, time
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import numpy as np
 import lorenz, metrics
