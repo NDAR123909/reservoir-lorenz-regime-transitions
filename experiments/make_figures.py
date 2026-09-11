@@ -78,7 +78,7 @@ def _scatter(ax, xs, per_lists, color, jitter):
 
 
 def fig2():
-    """Manuscript Figure 3(a) -- extrapolation distance vs training-range width."""
+    """Manuscript Figure 3(a): extrapolation distance vs training-range width."""
     r = _load("c2")
     pts = sorted(r["points"], key=lambda p: p["x"])
     x = np.array([p["x"] for p in pts])
@@ -114,7 +114,7 @@ def fig2():
 
 
 def fig3():
-    """Manuscript Figure 3(b) -- extrapolation distance vs sample density."""
+    """Manuscript Figure 3(b): extrapolation distance vs sample density."""
     r = _load("c3")
     pts = sorted(r["points"], key=lambda p: p["x"])
     x = np.array([p["x"] for p in pts])
@@ -136,7 +136,7 @@ def fig3():
 
     # per-sample segment length, in steps; the caption explains what these are.
     # M=2 and M=3 sit close enough on a 3.2 in axis to touch, so nudge that pair
-    # apart horizontally rather than staggering -- all six share one baseline.
+    # apart horizontally rather than staggering; all six share one baseline.
     nudge = {0: -0.35, 1: 0.35}
     for i, (xi, pl) in enumerate(zip(x, psl)):
         ax.text(xi + nudge.get(i, 0.0), 0.02, f"{pl//1000}k",
@@ -147,7 +147,7 @@ def fig3():
 
 
 def fig4():
-    """Manuscript Figure 4 -- where the collapse is predicted, vs window position.
+    """Manuscript Figure 4: where the collapse is predicted, vs window position.
 
     Single panel. The strict across-Hopf depth is zero at every d, which the
     Results text states in one sentence; it does not need its own axes.
