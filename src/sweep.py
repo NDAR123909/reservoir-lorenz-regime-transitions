@@ -50,7 +50,6 @@ import numpy as np
 
 import lorenz
 import metrics
-from reservoir import _normalize_param
 
 # ---- measurement constants (pre-registered, logged in the progress log) ---- #
 DELTA_RHO = 0.1            # outward step resolution (methodology 4)
