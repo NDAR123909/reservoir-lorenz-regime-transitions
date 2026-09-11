@@ -1,6 +1,5 @@
 __pycache__/
 *.pyc
-.ipynb_checkpoints/
 
 # Regenerable caches. These rebuild deterministically from the logged seeds
 # (see the reproducibility statement), so they are kept out of the repo.
