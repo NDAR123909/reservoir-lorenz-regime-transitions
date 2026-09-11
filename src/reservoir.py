@@ -88,10 +88,7 @@ class ParameterAwareESN:
         # which is the difference between a study that re-runs bit-for-bit and one
         # that only re-runs statistically. Handing eigs a deterministic v0 (drawn
         # from a generator keyed to cfg.seed, separate from rng so the W/Win/b
-        # draw order is untouched) pins |lambda_max| to a fixed value for a given
-        # seed. This changes no hyperparameter and no architecture; the target
-        # spectral_radius is unchanged; only the numerical path to it is made
-        # reproducible (C5 determinism, methodology v2 section 1.5 untouched).
+        # draw order is untouched) pins |lambda_max| to a fixed value for a given seed
         v0 = np.random.default_rng(cfg.seed + 777).standard_normal(N)
         try:
             vals = eigs(W, k=1, which="LM", return_eigenvectors=False,
