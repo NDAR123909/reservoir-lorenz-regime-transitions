@@ -1,6 +1,4 @@
 """
-gate_one.py
-===========
 Evaluate ONE C1 configuration and append the result to data/gate_log.json.
 Driving the section-8 resolution path one config per process keeps each run
 inside the time budget (background jobs don't persist here) while building up a
