@@ -62,9 +62,7 @@ DRHO_UP_MAX = 6.0          # cap on the upward same-class walk (rho units)
 RHO_FLOOR = 20.0           # downward walk floor for the across-Hopf test
 
 
-# --------------------------------------------------------------------------- #
-# sweep definitions (methodology section 4)                                   #
-# --------------------------------------------------------------------------- #
+# sweep definitions                                   
 def _linspace_rhos(center, width, M):
     return list(np.round(np.linspace(center - width / 2.0, center + width / 2.0, M), 4))
 
