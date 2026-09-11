@@ -69,7 +69,7 @@ def main():
 
     # deterministic true trajectories, one seeded IC per rho
     ic_rng = np.random.default_rng(MASTER + 777)
-    fig = plt.figure(figsize=(5.0, 3.4))
+    fig = plt.figure(figsize=(8.0, 5.2))
     for col, rho in enumerate(RHO_SHOW):
         x0 = ic_rng.uniform(-15, 15, size=3)
         true_tr = lorenz.integrate_esn_grid(rho, N_FREE, transient_time=80.0, x0=x0)
@@ -83,32 +83,33 @@ def main():
         for row, (tr, c) in enumerate([(true_tr, TRUTH_C), (esn_tr, ESN_C)]):
             ax = fig.add_subplot(2, 3, row * 3 + col + 1, projection="3d")
             # rasterized so the vector PDF stays small; the text stays vector
-            ax.plot(tr[:, 0], tr[:, 1], tr[:, 2], color=c, lw=0.35, alpha=0.85,
+            ax.plot(tr[:, 0], tr[:, 1], tr[:, 2], color=c, lw=0.30, alpha=0.85,
                     rasterized=True)
-            ax.set_xlabel("x", fontsize=8, labelpad=-9)
-            ax.set_ylabel("y", fontsize=8, labelpad=-9)
-            ax.set_zlabel("z", fontsize=8, labelpad=-5)
+            ax.set_xlabel("x", fontsize=8, labelpad=2)
+            ax.set_ylabel("y", fontsize=8, labelpad=2)
+            ax.set_zlabel("z", fontsize=8, labelpad=3)
             # One frame for all six panels, so (a)-(c) and (d)-(f) are directly
             # comparable and the tick choice does not vary panel to panel.
             ax.set_xlim(-22, 22)
             ax.set_ylim(-30, 30)
             ax.set_zlim(0, 55)
-            # x and y carry no quantitative claim here, and their numerals
-            # collide at the front corner at this panel size; only z is labelled.
-            ax.set_xticks([-20, 0, 20]); ax.set_xticklabels([])
-            ax.set_yticks([-20, 0, 20]); ax.set_yticklabels([])
-            ax.set_zticks([0, 20, 40])
-            ax.tick_params(axis="z", labelsize=6.5, pad=-1)
-            ax.view_init(elev=18, azim=-60)
+            # Orthographic projection below keeps equal value steps at equal
+            # pixel steps, so all three axes can carry full numerals.
+            ax.set_xticks([-20, -10, 0, 10, 20])
+            ax.set_yticks([-20, -10, 0, 10, 20])
+            ax.set_zticks([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50])
+            ax.tick_params(labelsize=6.0, pad=0.5)
+            ax.set_proj_type("ortho")
+            ax.view_init(elev=20, azim=-45)
             ax.set_box_aspect((1, 1, 0.9))
             ax.text2D(0.02, 0.95, f"({'abcdef'[row * 3 + col]})",
-                      transform=ax.transAxes, fontsize=9, fontweight="bold")
+                      transform=ax.transAxes, fontsize=11, fontweight="bold")
         print(f"[fig5] rho={rho:g} done ({time.time()-t0:.0f}s)")
 
     # matplotlib's layout engines mis-measure 3-D bounding boxes, which clips the
     # right column's z labels; place the grid explicitly instead.
-    fig.subplots_adjust(left=0.00, right=0.95, top=0.98, bottom=0.05,
-                        wspace=0.10, hspace=0.14)
+    fig.subplots_adjust(left=0.01, right=0.95, top=0.97, bottom=0.06,
+                        wspace=0.06, hspace=0.16)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.splitext(OUT)[0] + "." + ext, dpi=300)
     print(f"[fig5] figure -> {os.path.relpath(OUT)} (+ .pdf)   ({time.time()-t0:.0f}s total)")
