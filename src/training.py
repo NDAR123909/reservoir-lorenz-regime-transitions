@@ -1,6 +1,4 @@
 """
-training.py
-===========
 Training and evaluation harness for the parameter-aware ESN. Builds training
 segments at a fixed total data length (methodology 4), fits the readout, and
 reconstructs the z-maxima bifurcation diagram for the C1 gate (methodology C1).
