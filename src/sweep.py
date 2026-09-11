@@ -1,7 +1,7 @@
 """
-C2-C4 sweep machinery: the extrapolation-distance measurement of methodology
-section 3.5 and the three sampling sweeps of section 4, run against the locked
-architecture (ESNConfig defaults = post-gate locked values, methodology v2 1.5).
+The extrapolation-distance measurement / and the three 
+sampling sweeps, run against the fixed architecture (ESNConfig 
+defaults = the post-gate values).
 
 The C1 gate is closed; this module never touches a hyperparameter.
 It varies only the three sampling choices the literature fixes for convenience:
@@ -12,9 +12,9 @@ It varies only the three sampling choices the literature fixes for convenience:
 
 Every configuration holds the total training length L_total = 120,000 ESN steps,
 so when the sample count M changes the per-sample length L_total // M absorbs it
-and the x-axis is sample count, not data volume (methodology 4, C3).
+and the x-axis is sample count, not data volume.
 
-Extrapolation distance Delta-rho (methodology 3.5)
+Extrapolation distance Delta-rho
 --------------------------------------------------
 Starting at a training-window edge, step outward in rho at resolution
 delta-rho = 0.1 and find the largest contiguous outward run for which a per-rho
