@@ -10,7 +10,6 @@ from __future__ import annotations
 import numpy as np
 
 import lorenz
-import metrics
 from reservoir import ParameterAwareESN, ESNConfig
 
 
