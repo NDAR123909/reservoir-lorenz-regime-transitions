@@ -1,6 +1,4 @@
 """
-run_c1.py
-=========
 C1 gate (methodology C1, acceptance in section 7). Train the parameter-aware ESN
 on rho in {24.56, 26.06, 27.56, 29.06}, reconstruct the z-maxima bifurcation
 diagram over rho in [24, 32] by cold extrapolation, aggregate over reservoir
