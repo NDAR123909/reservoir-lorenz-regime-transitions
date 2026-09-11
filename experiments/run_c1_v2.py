@@ -33,7 +33,7 @@ plt.rcParams.update({
     "savefig.dpi":      300,
 })
 
-import lorenz, training
+import training
 from reservoir import ESNConfig
 
 RHO_TRAIN = [24.56, 26.06, 27.56, 29.06]
