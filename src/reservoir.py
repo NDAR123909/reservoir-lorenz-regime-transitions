@@ -69,7 +69,7 @@ class ParameterAwareESN:
         self.mu = np.zeros(cfg.n_inputs)     # pooled mean of x,y,z
         self.sd = np.ones(cfg.n_inputs)      # pooled std of x,y,z
 
-    # ---- construction ---------------------------------------------------- #
+    # construction 
     def _build_reservoir(self):
         cfg = self.cfg
         rng = np.random.default_rng(cfg.seed)
@@ -112,7 +112,7 @@ class ParameterAwareESN:
 
         self.b = rng.uniform(-1.0, 1.0, size=N) * cfg.bias_scale
 
-    # ---- standardization -------------------------------------------------- #
+    # standardization 
     def set_pooled_stats(self, mu, sd):
         self.mu = np.asarray(mu, dtype=float)
         self.sd = np.asarray(sd, dtype=float)
@@ -124,7 +124,7 @@ class ParameterAwareESN:
     def destandardize(self, xyz_hat: np.ndarray) -> np.ndarray:
         return xyz_hat * self.sd + self.mu
 
-    # ---- reservoir drive -------------------------------------------------- #
+    # reservoir drive
     def _update(self, r, u):
         cfg = self.cfg
         pre = self.Wr.dot(r) + self.Win.dot(u) + self.b
@@ -148,7 +148,7 @@ class ParameterAwareESN:
             R[t] = r
         return R
 
-    # ---- training (methodology 1.3) -------------------------------------- #
+    # training
     def fit(self, segments):
         """
         Fit the linear readout by ridge regression over several training
@@ -186,12 +186,12 @@ class ParameterAwareESN:
         self.Wout = np.linalg.solve(A, B).T                 # (3, N+1)
         return self
 
-    # ---- readout ---------------------------------------------------------- #
+    # readout 
     def _readout(self, r):
         raug = np.concatenate([r, [1.0]])
         return self.Wout @ raug
 
-    # ---- prediction protocols (methodology 1.4) -------------------------- #
+    # prediction protocols 
     def warmup_then_freerun(self, warmup_xyz: np.ndarray, rho: float,
                             n_free: int) -> np.ndarray:
         """
