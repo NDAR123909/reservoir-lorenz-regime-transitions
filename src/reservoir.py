@@ -23,7 +23,7 @@ and gamma_p were set in the C1 gate; their section-1.5 priors were 0.9 and 0.5.)
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import eigs
