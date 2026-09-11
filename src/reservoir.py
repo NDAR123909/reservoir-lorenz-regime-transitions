@@ -32,9 +32,9 @@ RHO_REF = (20.0, 36.0)
 
 @dataclass
 class ESNConfig:
-    # Post-gate LOCKED values (methodology v2, section 1.5). The C1 gate closed
-    # on gamma_p=0.1 and spectral_radius=0.6; everything else stayed at the
-    # section-1.5 priors. These carry into C2-C4 unchanged -- do not reopen.
+    # Values fixed by the C1 gate: gamma_p=0.1 and spectral_radius=0.6.
+    # Everything else kept its prior. C2-C4 all run against these, so changing
+    # one here invalidates the cross-sweep comparison.
     N: int = 500
     degree: int = 6                 # average in-degree of Wr
     spectral_radius: float = 0.6    # LOCKED in the C1 gate (prior was 0.9)
@@ -89,7 +89,7 @@ class ParameterAwareESN:
         # that only re-runs statistically. Handing eigs a deterministic v0 (drawn
         # from a generator keyed to cfg.seed, separate from rng so the W/Win/b
         # draw order is untouched) pins |lambda_max| to a fixed value for a given
-        # seed. This changes no hyperparameter and no architecture -- the target
+        # seed. This changes no hyperparameter and no architecture; the target
         # spectral_radius is unchanged; only the numerical path to it is made
         # reproducible (C5 determinism, methodology v2 section 1.5 untouched).
         v0 = np.random.default_rng(cfg.seed + 777).standard_normal(N)
