@@ -6,7 +6,7 @@
     "gamma_p": 0.1,
     "spectral_radius": 0.6
   },
-  "revision": "methodology v2 / Option A",
+  "revision": "rmse scoped to rho >= 24.74",
   "metrics": {
     "class_acc": 1.0,
     "zmax_rmse": 0.6965037748548621,
