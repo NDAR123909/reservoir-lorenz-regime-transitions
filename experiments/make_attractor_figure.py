@@ -15,7 +15,7 @@ reconstructed attractor has the right geometry, not that the paths overlay.
 
 Panels are labelled (a)-(f) in reading order, as JURPA requires for multi-part
 figures; which rho and which of truth/ESN each panel shows is carried by the
-caption. Rendered at 5.0 in wide -- INSERT AT 5.0 in, not 3.5 in, or the panel
+caption. Rendered at 5.0 in wide. INSERT AT 5.0 in, not 3.5 in, or the panel
 type drops below legibility.
 
 Deterministic end to end on the pinned stack (see REPRODUCIBILITY.md). Run:
