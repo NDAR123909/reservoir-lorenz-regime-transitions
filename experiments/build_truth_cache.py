@@ -1,7 +1,7 @@
 """
 Precompute the ground-truth cache the C2/C3 same-class VPT measurement needs:
 for each rho on a master grid, a seeded ground-truth trajectory (warmup + free
-run), its valid ground-truth time (VGTT, the methodology-3.1 cap), and its
+run), its valid ground-truth time (VGTT, the cap on reported VPT), and its
 qualitative class. The cache is deterministic from the seed stream, so it is not
 shipped in the repo tarball; it is rebuilt here and reused by every sweep cell.
 
@@ -15,7 +15,7 @@ import lorenz, metrics
 
 HERE = os.path.dirname(__file__)
 CACHE = os.path.join(HERE, "..", "data", "truth_cache.pkl")
-MASTER_IC = 20260613 + 90000          # separate IC seed stream (methodology 5)
+MASTER_IC = 20260613 + 90000          # separate IC seed stream
 WARM = 200
 FREE = 3000
 RHO_LO, RHO_HI, RHO_STEP = 24.0, 40.0, 0.1
