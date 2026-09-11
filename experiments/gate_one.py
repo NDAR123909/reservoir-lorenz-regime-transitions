@@ -16,7 +16,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 import numpy as np
 import pickle
-import lorenz
 import training
 from reservoir import ESNConfig
 
