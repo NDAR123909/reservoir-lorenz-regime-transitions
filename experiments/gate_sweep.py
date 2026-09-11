@@ -1,6 +1,4 @@
 """
-gate_sweep.py
-=============
 Walk the C1 gate resolution path of methodology section 8, in order:
     1. gamma_p          in [0.1, 1.0]
     2. spectral_radius  in [0.4, 1.2]
