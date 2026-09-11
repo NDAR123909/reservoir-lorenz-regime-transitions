@@ -105,7 +105,7 @@ def finalize(upto, n_free):
     _plot(agg, truth, m, passed, os.path.join(outdir, "fig1_c1_v2_bifurcation.png"))
 
     result = {"tag": "c1_v2", "master_seed": MASTER, "realizations": R,
-              "locked_cfg": LOCKED, "revision": "methodology v2 / Option A",
+              "locked_cfg": LOCKED, "revision": "rmse scoped to rho >= 24.74",
               "metrics": {k: (float(v) if isinstance(v, (int, float, np.floating))
                               else v) for k, v in m.items()},
               "full_grid_rmse_frac": float(m_v1["zmax_rmse_frac"]),
