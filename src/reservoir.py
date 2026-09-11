@@ -1,23 +1,23 @@
 """
 The parameter-aware echo state network of Kong, Fan, Grebogi & Lai (2021), with
-the locked architecture of methodology section 1.
+the artchitecture fixed for this study.
 
-State update (1.1):
+State update:
     r(t+dt) = (1 - alpha) r(t) + alpha tanh( Wr r(t) + Win u(t) + b )
 
-Input (1.2):
+Input:
     u(t) = [ x_hat, y_hat, z_hat, p_hat ]
 The three Lorenz coordinates are standardized with statistics pooled across the
 whole training set; the parameter channel p_hat is rho mapped linearly onto the
 fixed reference interval [20, 36]. State columns of Win carry the scaling
 gamma_in, the parameter column carries gamma_p, kept separate on purpose (1.2).
 
-Readout (1.3): ridge regression, closed form,
+Readout: ridge regression, closed form,
     Wout = Y R^T ( R R^T + lambda I )^-1
 
-Locked hyperparameters (v2, 1.5): N=500, degree 6, spectral radius 0.6, leak 1.0,
+Fixed hyperparameters: N=500, degree 6, spectral radius 0.6, leak 1.0,
 gamma_in 0.10, gamma_p 0.1, bias 0.10, ridge 1e-6, washout 1000. (Spectral radius
-and gamma_p were set in the C1 gate; their section-1.5 priors were 0.9 and 0.5.)
+and gamma_p were set in the C1 gate; the priors were 0.9 and 0.5.)
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import eigs
 
-# locked reference interval for the parameter channel (methodology 2.4)
+# fixed reference interval for the parameter channel
 RHO_REF = (20.0, 36.0)
 
 
@@ -57,9 +57,9 @@ def _normalize_param(rho: float) -> float:
 
 class ParameterAwareESN:
     """
-    A single reservoir realization. Reservoir matrices depend only on the seed
-    (methodology 5: realizations differ only in the random draws of Wr, Win, b).
-    Pooled standardization statistics are set at fit time.
+    A single reservoir realization. Reservoir matrices depend only on the seed:
+    realizations differ only in the random draws of Wr, Win and b. Pooled
+    standardization statistics are set at fit time.
     """
 
     def __init__(self, cfg: ESNConfig):
@@ -101,7 +101,7 @@ class ParameterAwareESN:
         self.Wr = W.tocsr()
 
         # input matrix: 4 columns [x, y, z, p]; state columns scaled by gamma_in,
-        # parameter column scaled by gamma_p (methodology 1.2)
+        # parameter column scaled by gamma_p
         Win = rng.uniform(-1.0, 1.0, size=(N, cfg.n_inputs + 1))
         Win[:, :cfg.n_inputs] *= cfg.gamma_in
         Win[:, cfg.n_inputs] *= cfg.gamma_p
@@ -151,12 +151,12 @@ class ParameterAwareESN:
         Fit the linear readout by ridge regression over several training
         segments. Each segment is (xyz, rho): a raw Lorenz trajectory on the ESN
         grid and its constant rho. The reservoir is reset and a washout transient
-        discarded between segments (methodology 1.2).
+        discarded between segments.
 
         Standardization statistics are pooled across all segments first.
         """
         cfg = self.cfg
-        # pooled standardization (methodology 1.2 / 2): one mu, sd for all rho
+        # pooled standardization: one mu, sd for all rho
         all_xyz = np.concatenate([seg[0] for seg in segments], axis=0)
         self.set_pooled_stats(all_xyz.mean(axis=0), all_xyz.std(axis=0))
 
@@ -218,8 +218,8 @@ class ParameterAwareESN:
                          seed: int | None = None,
                          primer_hat: np.ndarray | None = None) -> np.ndarray:
         """
-        Cold parameter extrapolation (methodology 1.4): no ground-truth segment
-        at rho. The reservoir is warmed from a generic initial state and then
+        Cold parameter extrapolation: no ground-truth segment at rho.
+        The reservoir is warmed from a generic initial state and then
         free-runs on p_hat(rho) alone. Returns the predicted trajectory in raw
         coordinates with the opening `discard` transient removed.
 
@@ -228,9 +228,9 @@ class ParameterAwareESN:
         trajectory taken from an available training rho), it is teacher-forced
         while the parameter channel is already held at p_hat(rho*), which primes
         the reservoir onto the Lorenz manifold and away from spurious basins
-        before the free run. This is the multistability guard of methodology 9;
-        residual single-reservoir basin artifacts are removed by the median over
-        realizations (methodology 5, 3.5).
+        before the free run. This is the multistability guard; residual 
+        single-reservoir basin artifacts are removed by the median over
+        realizations.
         """
         p_hat = _normalize_param(rho)
         r = np.zeros(self.cfg.N)
