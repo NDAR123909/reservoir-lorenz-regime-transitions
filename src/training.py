@@ -143,7 +143,7 @@ def c1_metrics(agg, truth, rmse_rho_min: float | None = HOPF_RHO):
     The amplitude RMSE is scoped to rho >= rmse_rho_min (the Hopf landmark) by the
     methodology-v2 revision: below the Hopf the Lorenz system sits in the
     attractor-coexistence region (methodology 2.4), where the true z-maxima
-    envelope is not single-valued -- it depends on the initial condition -- so a
+    envelope is not single-valued (it depends on the initial condition), so a
     single-IC ground-truth envelope is not a well-posed amplitude target there.
     Regime-class accuracy is still scored across the entire grid, and the
     downward-across-Hopf behaviour is the dedicated subject of C4. Pass
