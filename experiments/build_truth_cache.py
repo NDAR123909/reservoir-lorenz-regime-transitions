@@ -1,6 +1,4 @@
 """
-build_truth_cache.py
-====================
 Precompute the ground-truth cache the C2/C3 same-class VPT measurement needs:
 for each rho on a master grid, a seeded ground-truth trajectory (warmup + free
 run), its valid ground-truth time (VGTT, the methodology-3.1 cap), and its
