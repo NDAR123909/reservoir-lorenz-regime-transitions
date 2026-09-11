@@ -1,8 +1,8 @@
 """
-C1 gate (methodology C1, acceptance in section 7). Train the parameter-aware ESN
-on rho in {24.56, 26.06, 27.56, 29.06}, reconstruct the z-maxima bifurcation
+C1 gate. Train the parameter-aware ESN on rho in
+{24.56, 26.06, 27.56, 29.06}, reconstruct the z-maxima bifurcation
 diagram over rho in [24, 32] by cold extrapolation, aggregate over reservoir
-realizations, and test the section-7 acceptance criterion.
+realizations, and test the acceptance criterion.
 
 Usage:
     python run_c1.py --realizations 32 --master-seed 20260613
@@ -20,7 +20,7 @@ from reservoir import ESNConfig
 
 RHO_TRAIN = [24.56, 26.06, 27.56, 29.06]
 RHO_GRID = np.round(np.arange(24.0, 32.0 + 1e-9, 0.1), 2)
-L_TOTAL = 120_000          # total training data length (methodology 4)
+L_TOTAL = 120_000          # total training data length
 
 
 def run(realizations=32, master_seed=20260613, cfg_overrides=None,
@@ -70,7 +70,7 @@ def run(realizations=32, master_seed=20260613, cfg_overrides=None,
                             rmse_rho_min=None if rmse_full_grid else training.HOPF_RHO)
     passed, parts = training.c1_pass(m)
 
-    print("\n[C1] ----- acceptance (methodology section 7) -----")
+    print("\n[C1] ----- acceptance -----")
     print(f"  regime-class accuracy : {m['class_acc']*100:5.1f}%  "
           f"(>=95%? {parts['class']})  [{m['n_class_wrong']}/{m['n_rho']} wrong]")
     print(f"  z-maxima RMSE         : {m['zmax_rmse']:.3f}  "
