@@ -1,6 +1,4 @@
 """
-run_sweep.py
-============
 Chained, resumable driver for the C2-C4 sweeps (methodology section 4), built on
 the same checkpoint-and-resume pattern the C1 gate and the C1 v2 re-validation
 used: one (config, realization) cell per unit of work, each appended to disk the
