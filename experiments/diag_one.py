@@ -2,10 +2,10 @@
 Evaluate ONE C1 configuration while varying a *non-architecture* knob, and append 
 the result to data/diag_log.json.
 
-Two knobs, neither of which is a section-8 gate lever:
+Two knobs, neither of which is a gate lever:
   (a) the parameter-channel reference interval (reservoir.RHO_REF), recentred
       and/or rescaled via --ref-lo / --ref-hi;
-  (b) the cold-extrapolation primer of methodology 1.4, via --primer
+  (b) (b) the cold-extrapolation primer, via --primer
       {nearest, central, edge, none} and --primer-len.
 
 The architecture (N, spectral radius, leak, ridge, gamma_in, gamma_p) is held at
@@ -13,7 +13,7 @@ the gate-selected config unless overridden, so any movement is attributable
 to the knob under test, not to a hyperparameter change.
 
 One config per process keeps each run inside the time budget (background jobs do
-not persist here), exactly as the section-8 gate walk was run.
+not persist here), exactly as the gate walk was run.
 """
 import sys, os, json, time, argparse
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
