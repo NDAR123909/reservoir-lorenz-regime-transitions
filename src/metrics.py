@@ -33,7 +33,7 @@ def lyap_time(rho: float = 28.0) -> float:
     return 1.0 / le if le > 1e-6 else np.inf
 
 
-# 3.1  Valid ground-truth time                                                
+# Valid ground-truth time                                                
 def valid_ground_truth_time(rho: float, x0: np.ndarray, n_esn_steps: int,
                             eps: float = EPS) -> float:
     """
@@ -56,7 +56,7 @@ def valid_ground_truth_time(rho: float, x0: np.ndarray, n_esn_steps: int,
     return idx * DT_ESN
 
 
-# 3.2  Valid prediction time                                                  
+# Valid prediction time                                                  
 def valid_prediction_time(pred: np.ndarray, truth: np.ndarray,
                           rho: float = 28.0, eps: float = EPS,
                           vgtt: float | None = None,
@@ -78,9 +78,7 @@ def valid_prediction_time(pred: np.ndarray, truth: np.ndarray,
     return vpt_time
 
 
-# --------------------------------------------------------------------------- #
-# 3.3  Qualitative class                                                      #
-# --------------------------------------------------------------------------- #
+# Qualitative class                                                      
 def qualitative_class(traj: np.ndarray, lyap: float | None = None) -> str:
     """
     Class label ('fixed_point' / 'periodic' / 'chaotic') for a predicted
@@ -105,9 +103,7 @@ def predicted_lyapunov_proxy(traj: np.ndarray) -> float:
     return float(np.std(np.diff(zmax)))
 
 
-# --------------------------------------------------------------------------- #
-# 3.4  Correlation dimension (Grassberger-Procaccia)                          #
-# --------------------------------------------------------------------------- #
+# Correlation dimension (Grassberger-Procaccia)                          
 def correlation_dimension(traj: np.ndarray, n_points: int = 2000,
                           n_r: int = 20, seed: int = 0) -> float:
     """
@@ -139,9 +135,7 @@ def correlation_dimension(traj: np.ndarray, n_points: int = 2000,
     return float(slope)
 
 
-# --------------------------------------------------------------------------- #
-# 3.4  z-maxima distribution agreement                                        #
-# --------------------------------------------------------------------------- #
+z-maxima distribution agreement                                        
 def zmax_distribution(traj: np.ndarray) -> np.ndarray:
     return lorenz.z_maxima(traj[:, 2])
 
