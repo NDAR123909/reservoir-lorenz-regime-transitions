@@ -18,7 +18,7 @@ never sets a hyperparameter -- it varies only the sampling strategy.
 import sys, os, json, time, pickle, argparse
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import numpy as np
-import lorenz, training, sweep
+import training, sweep
 from reservoir import ESNConfig
 
 HERE = os.path.dirname(__file__)
