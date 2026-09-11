@@ -1,6 +1,4 @@
 """
-lorenz.py
-=========
 Lorenz 1963 system: fixed-step RK4 integrator, z-maxima return map, largest
 Lyapunov exponent (Benettin), and the numerical bifurcation-map / regime
 classifier specified in methodology section 2.3.
