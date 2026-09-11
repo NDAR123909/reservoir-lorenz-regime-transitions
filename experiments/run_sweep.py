@@ -11,7 +11,7 @@ so the run is driven as many short bounded invocations.
     python run_sweep.py --mode finalize --sweep C2 --R 32
 
 Architecture is the locked post-gate ESNConfig (methodology v2 1.5). This driver
-never sets a hyperparameter -- it varies only the sampling strategy.
+never sets a hyperparameter; it varies only the sampling strategy.
 """
 import sys, os, json, time, pickle, argparse
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
