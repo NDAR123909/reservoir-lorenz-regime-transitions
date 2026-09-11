@@ -1,6 +1,6 @@
 """
 Manuscript Figures 3(a), 3(b), and 4 (internally C2, C3, C4) 
-each with the section-5 realization spread drawn as a band. 
+each with the realization spread drawn as a band. 
 Reads the per-sweep result JSONs written by run_sweep.py --mode 
 finalize, plus the C4 cell store for the per-realization predicted-transition scatter.
 
