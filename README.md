@@ -5,17 +5,17 @@ of ρ, with ρ supplied as an extra input channel, can it reconstruct the
 bifurcation diagram at values it never saw? And what controls how far past the
 training window it stays right?
 
-This repository contains the code, experiments, and figures for
-the question at hand, and the README covers
-what the project found and how to reproduce it.
+This repository has the code, experiments 
+and figures behind that question, plus what 
+I found and how to rerun it.
 
 ![Attractor climate at unseen ρ: true Lorenz (grey) vs. cold-extrapolated ESN (red)](figures/fig5_attractor_climate.png)
 
 *True Lorenz attractor (top, grey) vs. the ESN free-running cold (bottom, red) at
 three values of ρ the network never trained on. This is a climate-comparison for the
-geometry that the network settles onto, not a comparison regarding the pointwise trajectory.*
+geometry that the network settles onto, not the pointwise trajectory.*
 
-## Each of the five contributions
+## Contributions
 
 - **C1**: Reproduce the bifurcation diagram from four training values
   (specifically the gate since nothing else runs until this passes).
@@ -29,7 +29,7 @@ steps) fixed, so density effects can't hide data-volume effects.
 
 ## Results
 
-All five contributions pass, and the acceptance bar for each of them is quoted with their respective results below:
+All five pass. Each result is quoted against its bar.
 
 - **C1** passes on all three criteria
   1. Regime-class accuracy 100% on the full
@@ -92,7 +92,7 @@ The full-grid value of 7.61% is recorded while the full diagnosis is in the acco
 
 The per-result cells (per config and realization) under `data/C{2,3,4}_cells/` and the
 C1 prediction cells are shipped so that the figures rebuild in seconds. The ground-truth
-and segment caches are not shipped, meaning that they regenerate from logged seeds.
+and segment caches are not shipped; they regenerate from the logged seeds.
 
 The repo numbers its figures by contribution, while the paper numbers them by order of
 appearance. Bare "Figure N" references elsewhere in this README mean the repo's.
@@ -110,8 +110,8 @@ at every window position, so it is stated in the Results text rather than plotte
 
 ## Reproducing the figures
 
-One-to-one reproduction needs the following pinned environment containing Python 3.12.3 with the
-pinned numpy, scipy, and matplotlib. Other versions give statistically
+Exact reproduction needs Python 3.12.3 with the pinned numpy, scipy
+and matplotlib. Other versions give statistically
 equivalent runs and not identical ones given that the sparse-matrix RNG and the eigensolver
 are very much version-sensitive (see `REPRODUCIBILITY.md`).
 
