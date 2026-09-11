@@ -1,11 +1,11 @@
 """
-Walk the C1 gate resolution path of methodology section 8, in order:
+Walk the C1 gate resolution path, in order:
     1. gamma_p          in [0.1, 1.0]
     2. spectral_radius  in [0.4, 1.2]
     3. ridge            in [1e-8, 1e-4]
     4. N                up to 1000
 Each stage fixes the best value found so far and moves to the next lever only if
-C1 still fails. Records exactly what moved for the progress log.
+C1 still fails. Records exactly what moved, to data/gate_log.json.
 """
 import sys, os, json, time
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
