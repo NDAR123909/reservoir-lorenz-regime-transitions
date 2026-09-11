@@ -1,14 +1,14 @@
 """
 Evaluation kernels for the study's four metrics.
 
-  - VGTT  (3.1): valid ground-truth time. Integrate the true trajectory twice
+  - VGTT: valid ground-truth time. Integrate the true trajectory twice
                  (RK4 at h and at h/2); the time at which they diverge by the
                  prediction threshold eps caps every reported prediction time.
-  - VPT   (3.2): valid prediction time. First time the normalized error exceeds
+  - VPT: valid prediction time. First time the normalized error exceeds
                  eps = 0.4, reported in Lyapunov times, capped at the VGTT.
-  - class (3.3): qualitative attractor class from a cold-extrapolation run.
-  - D2    (3.4): Grassberger-Procaccia correlation dimension.
-  - z-max (3.4): successive z-maxima distribution + Wasserstein distance.
+  - class: qualitative attractor class from a cold-extrapolation run.
+  - D2: Grassberger-Procaccia correlation dimension.
+  - z-max: successive z-maxima distribution + Wasserstein distance.
 
 Lyapunov time at rho=28: tau = 1/0.906 ~ 1.10 time units ~ 55 ESN steps.
 """
@@ -19,7 +19,7 @@ from scipy.stats import wasserstein_distance
 
 import lorenz
 
-EPS = 0.4                 # prediction error threshold (methodology 3.2)
+EPS = 0.4                 # prediction error threshold 
 DT_ESN = lorenz.H * lorenz.ESN_SUBSAMPLE   # 0.02
 LAMBDA_MAX_28 = 0.906     # largest Lyapunov exponent at rho=28
 TAU_LYAP_28 = 1.0 / LAMBDA_MAX_28          # ~1.10 time units
@@ -63,7 +63,7 @@ def valid_prediction_time(pred: np.ndarray, truth: np.ndarray,
                           in_lyap_times: bool = True) -> float:
     """
     First time E(t) = ||pred - truth|| / sqrt(<||truth||^2>) exceeds eps.
-    Reported in Lyapunov times and capped at the VGTT (methodology 3.2).
+    Reported in Lyapunov times and capped at the VGTT.
     """
     n = min(len(pred), len(truth))
     pred, truth = pred[:n], truth[:n]
@@ -152,7 +152,7 @@ def zmax_wasserstein(pred_traj: np.ndarray, true_traj: np.ndarray) -> float:
 def climate_agreement(pred_traj: np.ndarray, true_traj: np.ndarray,
                       d2_tol: float = 0.15) -> dict:
     """
-    Climate cross-check (methodology 3.4): correlation-dimension match within
+    Climate cross-check: correlation-dimension match within
     d2_tol and a small Wasserstein distance between z-maxima distributions.
     """
     d2_pred = correlation_dimension(pred_traj)
