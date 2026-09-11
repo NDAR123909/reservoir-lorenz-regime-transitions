@@ -1,6 +1,4 @@
 """
-diag_one.py
-===========
 Session 6 diagnostic. Evaluate ONE C1 configuration while varying a
 *non-architecture* knob, and append the result to data/diag_log.json.
 
