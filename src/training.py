@@ -1,7 +1,7 @@
 """
 Training and evaluation harness for the parameter-aware ESN. Builds training
-segments at a fixed total data length (methodology 4), fits the readout, and
-reconstructs the z-maxima bifurcation diagram for the C1 gate (methodology C1).
+segments at a fixed total data length, fits the readout, and
+reconstructs the z-maxima bifurcation diagram for the C1 gate.
 """
 
 from __future__ import annotations
@@ -16,8 +16,8 @@ def build_segments(rho_values, total_steps, transient_time=80.0,
                    ic_seed=0):
     """
     One Lorenz segment per training rho, each of length total_steps // M on the
-    ESN grid, so the summed length is held at total_steps (methodology 4). Lorenz
-    initial conditions get their own logged seed stream (methodology 5).
+    ESN grid, so the summed length is held at total_steps. Lorenz
+    initial conditions get their own logged seed stream.
     """
     M = len(rho_values)
     per = total_steps // M
@@ -94,7 +94,7 @@ def predicted_bifurcation(esn, rho_grid, segments, n_free=6000, discard=1500, se
 def aggregate_realizations(preds):
     """
     Aggregate per-realization predicted bifurcation reconstructions into a single
-    median diagram (methodology 3.5, 5): per rho, the median over realizations of
+    median diagram: per rho, the median over realizations of
     the mean z-maximum and the spread, and a majority vote on the regime class.
     The pooled z-maxima across realizations are kept for the diagram scatter.
     """
@@ -125,16 +125,16 @@ def aggregate_realizations(preds):
 
 
 # C1 acceptance evaluation                           
-HOPF_RHO = 24.74   # subcritical Hopf (methodology 2.3); below it the asymptotic
+HOPF_RHO = 24.74   # subcritical Hopf; below it the asymptotic
                    # state is coexistence-governed and the z-maxima envelope is
-                   # initial-condition multivalued (methodology 2.4).
+                   # initial-condition multivalued.
 
 
 def c1_metrics(agg, truth, rmse_rho_min: float | None = HOPF_RHO):
     """
     Compare the aggregated predicted reconstruction (from aggregate_realizations)
-    against the true bifurcation diagram. Returns the three acceptance numbers of
-    methodology section 7 (v2):
+    against the true bifurcation diagram. Returns the three acceptance numbers,
+    under the revised amplitude criterion:
         - regime-class accuracy across the full test grid   (target >= 0.95)
         - z-maxima diagram RMSE as a fraction of z range, evaluated on the
           chaotic band rho >= rmse_rho_min                  (target <= 0.05)
@@ -142,7 +142,7 @@ def c1_metrics(agg, truth, rmse_rho_min: float | None = HOPF_RHO):
 
     The amplitude RMSE is scoped to rho >= rmse_rho_min (the Hopf landmark): 
     below the Hopf the Lorenz system sits in the attractor-coexistence region 
-    (methodology 2.4), where the true z-maxima envelope is not single-valued 
+    where the true z-maxima envelope is not single-valued 
     (it depends on the initial condition), so a single-IC ground-truth envelope 
     is not a well-posed amplitude target there. Regime-class accuracy is still 
     scored across the entire grid, and the downward-across-Hopf behaviour is the 
@@ -185,7 +185,7 @@ def c1_metrics(agg, truth, rmse_rho_min: float | None = HOPF_RHO):
 
 
 def c1_pass(m, class_thresh=0.95, rmse_frac_thresh=0.05, lyap_thresh=0.10):
-    """Methodology section 7 acceptance rule for C1."""
+    """Acceptance rule for C1."""
     ok_class = m["class_acc"] >= class_thresh
     ok_rmse = m["zmax_rmse_frac"] <= rmse_frac_thresh
     ok_lyap = (not np.isfinite(m["lyap_proxy_err"])) or (m["lyap_proxy_err"] <= lyap_thresh)
