@@ -11,9 +11,7 @@ import lorenz
 from reservoir import ParameterAwareESN, ESNConfig
 
 
-# --------------------------------------------------------------------------- #
-# training-segment construction at fixed total data length                    #
-# --------------------------------------------------------------------------- #
+# training-segment construction at fixed total data length                    
 def build_segments(rho_values, total_steps, transient_time=80.0,
                    ic_seed=0):
     """
@@ -38,9 +36,7 @@ def train_realization(cfg: ESNConfig, segments):
     return esn
 
 
-# --------------------------------------------------------------------------- #
-# ground-truth bifurcation diagram (cached)                                    #
-# --------------------------------------------------------------------------- #
+# ground-truth bifurcation diagram (cached)                                    
 def ground_truth_bifurcation(rho_grid, n_esn_steps=8000, transient_time=80.0,
                              with_lyap=True, ic_seed=12345):
     ic_rng = np.random.default_rng(ic_seed)
@@ -59,9 +55,7 @@ def ground_truth_bifurcation(rho_grid, n_esn_steps=8000, transient_time=80.0,
             "lyap": np.array(lyaps), "traj": trajs}
 
 
-# --------------------------------------------------------------------------- #
-# predicted bifurcation diagram via cold extrapolation                         #
-# --------------------------------------------------------------------------- #
+# predicted bifurcation diagram via cold extrapolation                         
 def _safe_cold(esn, rho, n_free, discard, seed, primer_hat=None):
     """Cold-extrapolation run guarded against blow-up / NaN."""
     tr = esn.cold_extrapolate(rho, n_free=n_free, discard=discard, seed=seed,
@@ -130,9 +124,7 @@ def aggregate_realizations(preds):
             "zspread": zspread, "zmax": zmax_pool}
 
 
-# --------------------------------------------------------------------------- #
-# C1 acceptance evaluation (methodology section 7)                             #
-# --------------------------------------------------------------------------- #
+# C1 acceptance evaluation                           
 HOPF_RHO = 24.74   # subcritical Hopf (methodology 2.3); below it the asymptotic
                    # state is coexistence-governed and the z-maxima envelope is
                    # initial-condition multivalued (methodology 2.4).
