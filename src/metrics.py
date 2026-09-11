@@ -1,6 +1,4 @@
 """
-metrics.py
-==========
 Evaluation kernels of methodology section 3.
 
   - VGTT  (3.1): valid ground-truth time. Integrate the true trajectory twice
