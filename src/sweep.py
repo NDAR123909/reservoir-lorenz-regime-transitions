@@ -1,6 +1,4 @@
 """
-sweep.py
-========
 C2-C4 sweep machinery: the extrapolation-distance measurement of methodology
 section 3.5 and the three sampling sweeps of section 4, run against the locked
 architecture (ESNConfig defaults = post-gate locked values, methodology v2 1.5).
