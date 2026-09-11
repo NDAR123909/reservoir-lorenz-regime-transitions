@@ -1,6 +1,4 @@
 """
-diag_zones.py
-=============
 Session 6 zone diagnostic. At the Session-5 best-found config, decompose the
 C1 z-maxima error by region:
     low edge   : rho in [24.0, 24.56)   (downward extrapolation, toward/below Hopf)
