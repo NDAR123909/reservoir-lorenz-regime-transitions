@@ -1,6 +1,4 @@
 """
-reservoir.py
-============
 The parameter-aware echo state network of Kong, Fan, Grebogi & Lai (2021), with
 the locked architecture of methodology section 1.
 
