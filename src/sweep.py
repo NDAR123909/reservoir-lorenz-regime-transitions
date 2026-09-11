@@ -14,8 +14,8 @@ Every configuration holds the total training length L_total = 120,000 ESN steps,
 so when the sample count M changes the per-sample length L_total // M absorbs it
 and the x-axis is sample count, not data volume.
 
-Extrapolation distance Delta-rho
---------------------------------------------------
+Extrapolation distance Delta-rho:
+
 Starting at a training-window edge, step outward in rho at resolution
 delta-rho = 0.1 and find the largest contiguous outward run for which a per-rho
 validity test holds. Validity has two forms, chosen by what the test rho crosses:
@@ -29,17 +29,17 @@ validity test holds. Validity has two forms, chosen by what the test rho crosses
 
   across-bifurcation (C4, stepping DOWN across the Hopf at rho ~ 24.74 into the
       fixed-point regime): VPT is not meaningful once the attractor type changes,
-      so validity is the qualitative-class match alone (methodology 3.3, 3.5).
-      Ground-truth class below the Hopf is taken from the section-2.3 landmark
+      so validity is the qualitative-class match alone.
+      Ground-truth class below the Hopf is taken from the Hopf landmark
       (fixed_point for rho < 24.74), not the single-IC classifier, because the
-      coexistence sliver fools a single-IC label, the same reasoning the v2
+      coexistence sliver fools a single-IC label, the same reasoning the revised
       C1 revision used.
 
-Aggregation (methodology 3.5, 5)
---------------------------------
+Aggregation: 
+
 Validity is evaluated both per realization (giving an R-sample Delta-rho
-distribution -> median + IQR band, the section-5 figure quantity) and on the
-median-over-realizations curve (the section-3.5 point estimate). The two are
+distribution with the median + IQR band, the quantity plotted) and on the
+median-over-realizations curve (the point estimate). The two are
 reported side by side; agreement is the internal consistency check.
 """
 
@@ -49,10 +49,10 @@ import numpy as np
 import lorenz
 import metrics
 
-# measurement constants (pre-registered, logged in the progress log) 
-DELTA_RHO = 0.1            # outward step resolution (methodology 4)
+# measurement constants, fixed before the sweeps were run 
+DELTA_RHO = 0.1            # outward step resolution 
 FRAC = 0.5                 # same-class VPT must stay >= FRAC * in-window VPT
-HOPF_RHO = 24.74           # subcritical Hopf landmark (methodology 2.3)
+HOPF_RHO = 24.74           # subcritical Hopf landmark 
 VPT_WARM = 200             # teacher-forced warmup steps for warmup-then-free-run
 VPT_FREE = 1500            # free-run steps for the VPT comparison
 CLASS_FREE = 3000          # free-run steps for a cold-extrapolation class call
@@ -62,7 +62,7 @@ DRHO_UP_MAX = 6.0          # cap on the upward same-class walk (rho units)
 RHO_FLOOR = 20.0           # downward walk floor for the across-Hopf test
 
 
-# sweep definitions                                   
+# sweep definitions
 def _linspace_rhos(center, width, M):
     return list(np.round(np.linspace(center - width / 2.0, center + width / 2.0, M), 4))
 
@@ -87,7 +87,7 @@ def sweep_points(which: str):
     if which == "C2clamp":
         # Robustness check for the W=10 tension described below.
         # C2_W10's window [24, 34] puts its lowest training sample at rho = 24,
-        # below the Hopf at 24.74, which section 2.4 excludes from training. This
+        # below the Hopf at 24.74, which the training protocol excludes. This
         # variant is that same window (same center, width, upper edge, and
         # upward-walk geometry) but with the training samples clamped to
         # rho >= HOPF_RHO, which drops the single sub-Hopf sample at rho = 24.
@@ -198,7 +198,7 @@ def measure_down(esn, spec, truth, primer_hat):
         tr = esn.cold_extrapolate(float(rho), n_free=CLASS_FREE,
                                   discard=CLASS_DISCARD, primer_hat=primer_hat)
         pcls[i] = _class_of(tr)
-        # landmark ground-truth class (methodology 2.3): chaotic >= Hopf else FP
+        # landmark ground-truth class: chaotic >= Hopf else FP
         tcls[i] = "chaotic" if rho >= HOPF_RHO else "fixed_point"
         valid = (pcls[i] == tcls[i])
         consec_bad = 0 if valid else consec_bad + 1
@@ -257,7 +257,7 @@ def predicted_transition_rho(cell):
     is where the ESN, riding the chaotic manifold downward, finally settles onto a
     fixed point. Returns None if it never settles. The overshoot relative to the
     true Hopf (HOPF_RHO - this) measures how far past the Hopf the spurious chaotic
-    attractor persists (the pseudo-Lorenz persistence of methodology 9).
+    attractor persists past the true bifurcation.
     """
     grid, pcls = cell["grid"], cell["pred_class"]
     trans = None
