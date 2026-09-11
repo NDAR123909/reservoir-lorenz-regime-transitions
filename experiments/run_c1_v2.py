@@ -1,12 +1,12 @@
 """
-C1 re-validation under methodology v2 (Option A): the model is unchanged from the
+C1 re-validation under the revised criterion: the model is unchanged from the
 gate-selected configuration (gamma_p=0.1, spectral_radius=0.6, everything
-else at section 1.5); only the amplitude criterion's evaluation domain changes
+else at its prior); only the amplitude criterion's evaluation domain changes
 (z-maxima RMSE scoped to the chaotic band rho >= 24.74, training.HOPF_RHO).
 
 Because background jobs do not persist in this environment, realizations are
 checkpointed one at a time to data/c1v2_preds/ and the run resumes where it left
-off. `--mode finalize` aggregates whatever is on disk, applies the v2 acceptance
+off. `--mode finalize` aggregates whatever is on disk, applies the revised acceptance
 test, writes the result JSON, and draws Figure 1.
 
     python run_c1_v2.py --mode run --upto 10 --batch 5
@@ -89,7 +89,7 @@ def finalize(upto, n_free):
     passed, parts = training.c1_pass(m)
     m_v1 = training.c1_metrics(agg, truth, rmse_rho_min=None)  # full-grid, for the record
 
-    print(f"\n[c1v2] ----- acceptance (methodology v2, section 7) -----   R={R}")
+    print(f"\n[c1v2] ----- acceptance -----   R={R}")
     print(f"  regime-class accuracy : {m['class_acc']*100:5.1f}%  "
           f"(>=95%? {parts['class']})  [{m['n_class_wrong']}/{m['n_rho']} wrong]")
     print(f"  z-maxima RMSE (rho>={m['rmse_rho_min']}) : "
