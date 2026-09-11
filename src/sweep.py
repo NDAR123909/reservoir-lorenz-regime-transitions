@@ -49,7 +49,7 @@ import numpy as np
 import lorenz
 import metrics
 
-# ---- measurement constants (pre-registered, logged in the progress log) ---- #
+# measurement constants (pre-registered, logged in the progress log) 
 DELTA_RHO = 0.1            # outward step resolution (methodology 4)
 FRAC = 0.5                 # same-class VPT must stay >= FRAC * in-window VPT
 HOPF_RHO = 24.74           # subcritical Hopf landmark (methodology 2.3)
@@ -124,9 +124,7 @@ def sweep_points(which: str):
     raise ValueError(which)
 
 
-# --------------------------------------------------------------------------- #
-# per-(config, realization) cell measurement                                  #
-# --------------------------------------------------------------------------- #
+# per-(config, realization) cell measurement                                  
 def _vpt_raw(pred, truth_free, vgtt):
     """VPT in RAW time units (in_lyap_times=False), capped at the VGTT."""
     return metrics.valid_prediction_time(pred, truth_free, eps=metrics.EPS,
@@ -214,9 +212,7 @@ def measure_down(esn, spec, truth, primer_hat):
     return dict(edge=float(lower_edge), grid=grid, pred_class=pcls, true_class=tcls)
 
 
-# --------------------------------------------------------------------------- #
-# Delta-rho from an aligned arrays cell                                        #
-# --------------------------------------------------------------------------- #
+# Delta-rho from an aligned arrays cell                                        
 def delta_rho_up(cell, vpt_in=None):
     """Contiguous same-class upward distance from the edge for one realization."""
     vin = cell["vpt_in"] if vpt_in is None else vpt_in
