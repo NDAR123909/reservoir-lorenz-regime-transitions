@@ -7,10 +7,10 @@ C1 z-maxima error by region:
 
 For each zone it reports the RMSE on the per-rho mean z-maximum (the current C1
 metric, as a fraction of the global z-range) and the median per-rho Wasserstein
-distance between predicted and true z-maxima distributions (the methodology
-section-3.4 climate metric), again as a fraction of the z-range.
+distance between predicted and true z-maxima distributions (the / climate metric),
+again as a fraction of the z-range.
 
-This grounds the section-10 revision options in measured numbers rather than
+This grounds the revision options in measured numbers rather than
 assertion. R and n_free match the gate walk.
 """
 import sys, os, json, time, argparse
