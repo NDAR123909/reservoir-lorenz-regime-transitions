@@ -1,6 +1,6 @@
 """
 C1 re-validation under methodology v2 (Option A): the model is unchanged from the
-Session-5 best-found configuration (gamma_p=0.1, spectral_radius=0.6, everything
+gate-selected configuration (gamma_p=0.1, spectral_radius=0.6, everything
 else at section 1.5); only the amplitude criterion's evaluation domain changes
 (z-maxima RMSE scoped to the chaotic band rho >= 24.74, training.HOPF_RHO).
 
@@ -41,7 +41,7 @@ MASTER = 20260613
 HERE = os.path.dirname(__file__)
 PRED_DIR = os.path.join(HERE, "..", "data", "c1v2_preds")
 CACHE = os.path.join(HERE, "..", "data", f"ground_truth_{MASTER+777}.pkl")
-LOCKED = dict(gamma_p=0.1, spectral_radius=0.6)   # Session-5 best-found
+LOCKED = dict(gamma_p=0.1, spectral_radius=0.6)   # fixed by the C1 gate
 
 
 def _load_truth():
