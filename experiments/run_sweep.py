@@ -111,9 +111,7 @@ def run(sweep_name, R, max_cells, only):
           flush=True)
 
 
-# --------------------------------------------------------------------------- #
-# finalize: aggregate cells -> median + IQR Delta-rho, acceptance, figure       #
-# --------------------------------------------------------------------------- #
+# finalize: aggregate cells to median + IQR Delta-rho, acceptance, figure       
 def _load_cells(sweep_name, spec, R):
     cells = []
     for k in range(R):
