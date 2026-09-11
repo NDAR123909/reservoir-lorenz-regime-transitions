@@ -135,7 +135,7 @@ def correlation_dimension(traj: np.ndarray, n_points: int = 2000,
     return float(slope)
 
 
-z-maxima distribution agreement                                        
+#z-maxima distribution agreement                                        
 def zmax_distribution(traj: np.ndarray) -> np.ndarray:
     return lorenz.z_maxima(traj[:, 2])
 
