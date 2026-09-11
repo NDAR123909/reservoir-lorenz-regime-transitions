@@ -1,16 +1,16 @@
 """
-Chained, resumable driver for the C2-C4 sweeps (methodology section 4), built on
+Chained, resumable driver for the C2-C4 sweeps, built on
 the same checkpoint-and-resume pattern the C1 gate and the C1 v2 re-validation
 used: one (config, realization) cell per unit of work, each appended to disk the
 moment it finishes, so a killed or timed-out process never loses more than the
-cell in flight. Long single jobs do not survive this environment (methodology 6),
+cell in flight. Long single jobs do not survive this environment,
 so the run is driven as many short bounded invocations.
 
     python run_sweep.py --mode run --sweep C2 --R 32 --max-cells 12
     ...                                      (repeat until all cells on disk)
     python run_sweep.py --mode finalize --sweep C2 --R 32
 
-Architecture is the locked post-gate ESNConfig (methodology v2 1.5). This driver
+Architecture is the post-gate ESNConfig. This driver
 never sets a hyperparameter; it varies only the sampling strategy.
 """
 import sys, os, json, time, pickle, argparse
@@ -26,7 +26,7 @@ TRUTH_CACHE = os.path.join(DATA, "truth_cache.pkl")
 SEG_DIR = os.path.join(DATA, "segcache")
 L_TOTAL = 120_000
 MASTER = 20260613                 # reservoir master seed (study-wide)
-MASTER_IC = MASTER + 90000        # IC seed stream (methodology 5)
+MASTER_IC = MASTER + 90000        # IC seed stream
 
 _TRUTH = None
 def truth():
@@ -44,7 +44,7 @@ def truth():
 
 
 def _seg_seed(spec):
-    # deterministic per-spec IC seed (methodology 5: seeds logged, study reruns
+    # deterministic per-spec IC seed (seeds logged, study reruns
     # bit-for-bit). hashlib rather than the salted built-in hash().
     import hashlib
     h = int(hashlib.md5(spec["id"].encode()).hexdigest(), 16) % 100000
@@ -91,7 +91,7 @@ def run(sweep_name, R, max_cells, only):
             if spec["direction"] == "up":
                 cell = sweep.measure_up(esn, spec, T)
             else:
-                # prime cold runs from the nearest-rho training segment (methodology 1.4)
+                # prime cold runs from the nearest-rho training segment
                 train_rhos = np.array([r for _, r in segs])
                 j = int(np.argmin(np.abs(train_rhos - spec["lower_edge"])))
                 primer = esn.standardize(segs[j][0][-1500:])
@@ -123,7 +123,7 @@ def _load_cells(sweep_name, spec, R):
 
 
 def _median_curve_drho_up(cells):
-    """Delta-rho from the median-over-realizations curve (methodology 3.5)."""
+    """Delta-rho from the median-over-realizations curve."""
     grid = cells[0]["grid"]
     vpt_in_med = np.median([c["vpt_in"] for c in cells])
     n = 0
@@ -157,7 +157,7 @@ def _median_curve_depth_down(cells):
 
 def _bootstrap_band(cells, estimator, B=2000, seed=12345):
     """
-    Realization-spread IQR on the median-curve estimator (methodology 5): resample
+    Realization-spread IQR on the median-curve estimator: resample
     realizations with replacement, recompute the median-curve Delta-rho each time,
     and return (q1, q3) of the bootstrap distribution. The band is centred on the
     full-sample point estimate by construction, so it represents how much the
@@ -207,8 +207,8 @@ def finalize(sweep_name, R):
                         pred_transition_rho_q1=t_q1, pred_transition_rho_q3=t_q3,
                         overshoot_median=round(sweep.HOPF_RHO - t_med, 4) if trans else float("nan"),
                         per_sample_len=L_TOTAL // spec["M"])
-        point = estimator(cells)                     # methodology 3.5 point estimate
-        q1, q3 = _bootstrap_band(cells, estimator)   # methodology 5 realization band
+        point = estimator(cells)                     # point estimate
+        q1, q3 = _bootstrap_band(cells, estimator)   # realization band
         rows.append(dict(id=spec["id"], x=spec["x"], xlabel=spec["xlabel"],
                          train_rhos=spec["train_rhos"], M=spec["M"],
                          n=len(cells), median=float(point), q1=q1, q3=q3,
