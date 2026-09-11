@@ -19,7 +19,7 @@ import sys, os, json, time, argparse
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import numpy as np, pickle
 from scipy.stats import wasserstein_distance
-import lorenz, training
+import training
 from reservoir import ESNConfig
 
 RHO_TRAIN = [24.56, 26.06, 27.56, 29.06]
