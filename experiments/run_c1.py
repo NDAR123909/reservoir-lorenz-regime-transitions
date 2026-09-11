@@ -51,7 +51,7 @@ def run(realizations=32, master_seed=20260613, cfg_overrides=None,
     print(f"[C1]   ground truth ready ({time.time()-t0:.1f}s)")
 
     # training segments are shared across realizations (data is fixed; only the
-    # reservoir draw changes -- methodology 5)
+    # reservoir draw changes)
     segments = training.build_segments(RHO_TRAIN, L_TOTAL, transient_time=80.0,
                                        ic_seed=master_seed + 1)
 
