@@ -32,7 +32,7 @@ validity test holds. Validity has two forms, chosen by what the test rho crosses
       so validity is the qualitative-class match alone (methodology 3.3, 3.5).
       Ground-truth class below the Hopf is taken from the section-2.3 landmark
       (fixed_point for rho < 24.74), not the single-IC classifier, because the
-      coexistence sliver fools a single-IC label -- the same reasoning the v2
+      coexistence sliver fools a single-IC label, the same reasoning the v2
       C1 revision used.
 
 Aggregation (methodology 3.5, 5)
@@ -88,8 +88,8 @@ def sweep_points(which: str):
         # Robustness check for the W=10 / section-2.4 tension (Session 8).
         # C2_W10's window [24, 34] puts its lowest training sample at rho = 24,
         # below the Hopf at 24.74, which section 2.4 excludes from training. This
-        # variant is that same window -- same center, width, upper edge, and
-        # upward-walk geometry -- but with the training samples clamped to
+        # variant is that same window (same center, width, upper edge, and
+        # upward-walk geometry) but with the training samples clamped to
         # rho >= HOPF_RHO, which drops the single sub-Hopf sample at rho = 24.
         # Comparing its Delta-rho to C2_W10's tells us whether the W=10 jump is
         # contamination from that sample or a real feature of a wide window.
