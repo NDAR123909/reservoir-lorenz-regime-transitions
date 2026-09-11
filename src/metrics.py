@@ -33,9 +33,7 @@ def lyap_time(rho: float = 28.0) -> float:
     return 1.0 / le if le > 1e-6 else np.inf
 
 
-# --------------------------------------------------------------------------- #
-# 3.1  Valid ground-truth time                                                #
-# --------------------------------------------------------------------------- #
+# 3.1  Valid ground-truth time                                                
 def valid_ground_truth_time(rho: float, x0: np.ndarray, n_esn_steps: int,
                             eps: float = EPS) -> float:
     """
@@ -58,9 +56,7 @@ def valid_ground_truth_time(rho: float, x0: np.ndarray, n_esn_steps: int,
     return idx * DT_ESN
 
 
-# --------------------------------------------------------------------------- #
-# 3.2  Valid prediction time                                                  #
-# --------------------------------------------------------------------------- #
+# 3.2  Valid prediction time                                                  
 def valid_prediction_time(pred: np.ndarray, truth: np.ndarray,
                           rho: float = 28.0, eps: float = EPS,
                           vgtt: float | None = None,
