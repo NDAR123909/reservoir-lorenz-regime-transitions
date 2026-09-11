@@ -1,5 +1,5 @@
 """
-Session 6 zone diagnostic. At the Session-5 best-found config, decompose the
+Zone diagnostic. At the gate-selected config, decompose the
 C1 z-maxima error by region:
     low edge   : rho in [24.0, 24.56)   (downward extrapolation, toward/below Hopf)
     interior   : rho in [24.56, 29.06]  (interpolation between training points)
