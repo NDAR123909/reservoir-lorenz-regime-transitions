@@ -95,9 +95,7 @@ def integrate_esn_grid(rho: float, n_esn_steps: int, transient_time: float = 40.
                      transient=transient_rk4, subsample=ESN_SUBSAMPLE, rng=rng)
 
 
-# --------------------------------------------------------------------------- #
-# z-maxima return map                                                         #
-# --------------------------------------------------------------------------- #
+# z-maxima return map                                                         
 def z_maxima(z: np.ndarray) -> np.ndarray:
     """Successive local maxima of the z-coordinate (the Lorenz return map)."""
     z = np.asarray(z)
@@ -107,9 +105,7 @@ def z_maxima(z: np.ndarray) -> np.ndarray:
     return z[1:-1][interior]
 
 
-# --------------------------------------------------------------------------- #
-# Largest Lyapunov exponent (Benettin, tangent space)                          #
-# --------------------------------------------------------------------------- #
+# Largest Lyapunov exponent (Benettin, tangent space)                          
 def largest_lyapunov(rho: float,
                      t_total: float = 1000.0,
                      t_transient: float = 100.0,
@@ -156,9 +152,7 @@ def largest_lyapunov(rho: float,
     return log_sum / (n_renorm * steps_per_renorm * h)
 
 
-# --------------------------------------------------------------------------- #
-# Regime classifier (methodology 2.3)                                          #
-# --------------------------------------------------------------------------- #
+# Regime classifier (methodology 2.3)                                          
 # class thresholds (methodology 3.3): chaotic above +0.01, fixed point below
 # -0.01, periodic in between; plus a variance-collapse test for fixed points.
 LYAP_CHAOS = 0.01
