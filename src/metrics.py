@@ -1,5 +1,5 @@
 """
-Evaluation kernels of methodology section 3.
+Evaluation kernels for the study's four metrics.
 
   - VGTT  (3.1): valid ground-truth time. Integrate the true trajectory twice
                  (RK4 at h and at h/2); the time at which they diverge by the
