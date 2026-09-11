@@ -1,6 +1,6 @@
 """
-Session 6 diagnostic. Evaluate ONE C1 configuration while varying a
-*non-architecture* knob, and append the result to data/diag_log.json.
+Evaluate ONE C1 configuration while varying a *non-architecture* knob, and append 
+the result to data/diag_log.json.
 
 Two knobs, neither of which is a section-8 gate lever:
   (a) the parameter-channel reference interval (reservoir.RHO_REF), recentred
@@ -9,7 +9,7 @@ Two knobs, neither of which is a section-8 gate lever:
       {nearest, central, edge, none} and --primer-len.
 
 The architecture (N, spectral radius, leak, ridge, gamma_in, gamma_p) is held at
-the Session-5 best-found config unless overridden, so any movement is attributable
+the gate-selected config unless overridden, so any movement is attributable
 to the knob under test, not to a hyperparameter change.
 
 One config per process keeps each run inside the time budget (background jobs do
