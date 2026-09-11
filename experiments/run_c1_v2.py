@@ -1,6 +1,4 @@
 """
-run_c1_v2.py
-============
 C1 re-validation under methodology v2 (Option A): the model is unchanged from the
 Session-5 best-found configuration (gamma_p=0.1, spectral_radius=0.6, everything
 else at section 1.5); only the amplitude criterion's evaluation domain changes
