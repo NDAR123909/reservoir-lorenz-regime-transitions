@@ -40,7 +40,7 @@ Shipped in the repo:
 - `src/` and `experiments/`
 - the 480 sweep cells in `data/C2_cells`, `data/C3_cells`, `data/C4_cells`
 - the 10 C1 prediction cells in `data/c1v2_preds`
-- the four result JSONs and four figures in `figures/`
+- the seven result JSONs and nine figures in `figures/`
 
 Rebuilt on a clean checkout, excluded by `.gitignore`:
 
