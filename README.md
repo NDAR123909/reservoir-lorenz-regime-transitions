@@ -185,7 +185,7 @@ and it moved it in the opposite way from my initial guess. The readout is plain
 ridge regression solved in closed form
 
 ```math
-W_{\mathrm{out}} = V R^{\top} \big( R R^{\top} + \lambda I \big)^{-1}
+W_{\mathrm{out}} = Y R^{\top} \big( R R^{\top} + \lambda I \big)^{-1}
 ```
 
 For the bifurcation diagram, the network runs cold. There is no ground-truth trajectory
