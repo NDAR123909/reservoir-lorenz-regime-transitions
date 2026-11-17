@@ -33,9 +33,10 @@ validity test holds. Validity has two forms, chosen by what the test rho crosses
       Ground-truth class below the Hopf is taken from the Hopf landmark
       (fixed_point for rho < 24.74), not the single-IC classifier, because the
       coexistence sliver fools a single-IC label, the same reasoning the revised
-      C1 revision used.
+      C1 revision used. The downward walk always runs to RHO_FLOOR, so where each
+      network finally drops onto a fixed point is measured, not inferred.
 
-Aggregation: 
+Aggregation:
 
 Validity is evaluated both per realization (giving an R-sample Delta-rho
 distribution with the median + IQR band, the quantity plotted) and on the
@@ -49,17 +50,17 @@ import numpy as np
 import lorenz
 import metrics
 
-# measurement constants, fixed before the sweeps were run 
-DELTA_RHO = 0.1            # outward step resolution 
+# measurement constants
+DELTA_RHO = 0.1            # outward step resolution
 FRAC = 0.5                 # same-class VPT must stay >= FRAC * in-window VPT
 HOPF_RHO = 24.74           # subcritical Hopf landmark 
 VPT_WARM = 200             # teacher-forced warmup steps for warmup-then-free-run
 VPT_FREE = 1500            # free-run steps for the VPT comparison
 CLASS_FREE = 3000          # free-run steps for a cold-extrapolation class call
 CLASS_DISCARD = 1000       # opening transient discarded from a cold run
-BREAK_RUN = 6              # stop a walk after this many consecutive invalid steps
+BREAK_RUN = 6              # upward walk stops after this many consecutive invalid steps
 DRHO_UP_MAX = 6.0          # cap on the upward same-class walk (rho units)
-RHO_FLOOR = 20.0           # downward walk floor for the across-Hopf test
+RHO_FLOOR = 15.0           # C4 walk floor; at 20 most networks were still chaotic
 
 
 # sweep definitions
@@ -181,35 +182,29 @@ def measure_up(esn, spec, truth):
                 pred_class=pcls, true_class=tcls)
 
 
-def measure_down(esn, spec, truth, primer_hat):
+def measure_down(esn, spec, truth, primer_hat, floor=RHO_FLOOR):
     """
     Across-Hopf downward measurement for one realization (C4). Walks rho downward
-    from the lower window edge; at each step a cold extrapolation (no ground
-    truth at the target rho) gives the predicted class, compared to the landmark
-    ground-truth class. Returns aligned arrays on a fixed rho grid.
+    from the lower window edge to `floor`; at each step a cold extrapolation (no
+    ground truth at the target rho) gives the predicted class, compared to the
+    landmark ground-truth class. Every grid point gets a real class call. Unlike
+    the upward walk there is no early stop: a network can hold its chaotic
+    attractor far below the Hopf, and where it lets go is what C4 measures.
+    Returns aligned arrays on a fixed rho grid.
     """
     lower_edge = spec["lower_edge"]
-    grid = np.round(np.arange(lower_edge - DELTA_RHO, RHO_FLOOR - 1e-9,
+    grid = np.round(np.arange(lower_edge - DELTA_RHO, floor - 1e-9,
                               -DELTA_RHO), 2)
     pcls = np.empty(len(grid), dtype=object)
     tcls = np.empty(len(grid), dtype=object)
-    consec_bad = 0
     for i, rho in enumerate(grid):
         tr = esn.cold_extrapolate(float(rho), n_free=CLASS_FREE,
                                   discard=CLASS_DISCARD, primer_hat=primer_hat)
         pcls[i] = _class_of(tr)
         # landmark ground-truth class: chaotic >= Hopf else FP
         tcls[i] = "chaotic" if rho >= HOPF_RHO else "fixed_point"
-        valid = (pcls[i] == tcls[i])
-        consec_bad = 0 if valid else consec_bad + 1
-        if consec_bad >= BREAK_RUN:
-            for j in range(i + 1, len(grid)):
-                pcls[j] = "chaotic" if grid[j] >= HOPF_RHO else "fixed_point"
-                # mark as mismatch by flipping the predicted label
-                pcls[j] = "chaotic" if tcls[j] == "fixed_point" else "fixed_point"
-                tcls[j] = "chaotic" if grid[j] >= HOPF_RHO else "fixed_point"
-            break
-    return dict(edge=float(lower_edge), grid=grid, pred_class=pcls, true_class=tcls)
+    return dict(edge=float(lower_edge), floor=float(floor), grid=grid,
+                pred_class=pcls, true_class=tcls)
 
 
 # Delta-rho from an aligned arrays cell                                        
@@ -252,12 +247,15 @@ def crossed_hopf(cell):
 
 def predicted_transition_rho(cell):
     """
-    The network's own predicted collapse location: the highest rho at/below which
-    the predicted class is fixed_point for the whole remaining downward walk. This
-    is where the ESN, riding the chaotic manifold downward, finally settles onto a
-    fixed point. Returns None if it never settles. The overshoot relative to the
-    true Hopf (HOPF_RHO - this) measures how far past the Hopf the spurious chaotic
-    attractor persists past the true bifurcation.
+    The network's own predicted collapse location: the highest rho from which the
+    predicted class stays fixed_point all the way down to the floor of the walk.
+    This is where the ESN, riding its chaotic attractor downward, finally settles
+    onto a fixed point. Returns None if it is still chaotic at the floor, i.e. it
+    never settles within the walked range; callers should count those rather
+    than drop them. The true system loses its chaotic attractor at the
+    coexistence onset (24.06) and its fixed points stabilise at the Hopf (24.74),
+    so the distance below 24.06 is how long the network's attractor outlives the
+    real one.
     """
     grid, pcls = cell["grid"], cell["pred_class"]
     trans = None

@@ -1,8 +1,8 @@
 """
 Manuscript Figures 3(a), 3(b), and 4 (internally C2, C3, C4) 
 each with the realization spread drawn as a band. 
-Reads the per-sweep result JSONs written by run_sweep.py --mode 
-finalize, plus the C4 cell store for the per-realization predicted-transition scatter.
+Reads the per-sweep result JSONs written by run_sweep.py --mode
+finalize; c4_result.json carries the per-realization collapse points for Figure 4.
 
 File-to-manuscript numbering (the filenames predate the manuscript):
     fig2_c2_range.png    -> Figure 3(a) (via make_merged_figure.py), range width
@@ -15,11 +15,11 @@ not in the plots.
 
     python make_figures.py
 """
-import sys, os, json, glob, pickle
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+import os, json
 import numpy as np
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.transforms as mtransforms
 
 # Sized for a 3.2 in printed width at 100% insertion, so authored point sizes
 # land 1:1 on the page against ~10 pt body type.
@@ -34,11 +34,8 @@ plt.rcParams.update({
     "savefig.dpi":      300,
 })
 
-import sweep
-
 HERE = os.path.dirname(__file__)
 FIGS = os.path.join(HERE, "..", "figures")
-DATA = os.path.join(HERE, "..", "data")
 GREY, RED, TEAL, DARK = "0.55", "#c0392b", "#16a085", "#2c3e50"
 HOPF, COEX = 24.74, 24.06
 LEG = dict(framealpha=0.92, handlelength=1.4, borderpad=0.3, labelspacing=0.3)
@@ -147,40 +144,65 @@ def fig3():
 
 
 def fig4():
-    """Manuscript Figure 4: where the collapse is predicted, vs window position.
+    """Manuscript Figure 4: where each network's chaotic attractor collapses, vs window position.
 
     Single panel. The strict across-Hopf depth is zero at every d, which the
     Results text states in one sentence; it does not need its own axes.
+    Dots are the networks that settle, with each window's median and
+    25th-75th percentile drawn over them. Networks still chaotic at the floor of
+    the walk have no collapse point, so they are counted in a strip below the
+    floor instead of being dropped. Everything is labelled in place; there is no
+    legend to crowd the landmark lines.
     """
     r = _load("c4")
     pts = sorted(r["points"], key=lambda p: p["x"])
     x = np.array([p["x"] for p in pts])                       # d above Hopf
-    # per-realization predicted-transition rho from the cell store
-    trans_per, t_med, t_q1, t_q3 = [], [], [], []
-    for p in pts:
-        cells = [pickle.load(open(q, "rb"))
-                 for q in sorted(glob.glob(os.path.join(DATA, "C4_cells", f"{p['id']}_r*.pkl")))]
-        tr = [sweep.predicted_transition_rho(c) for c in cells]
-        tr = [t for t in tr if t is not None]
-        trans_per.append(tr)
-        t_med.append(np.median(tr)); t_q1.append(np.percentile(tr, 25)); t_q3.append(np.percentile(tr, 75))
-    t_med = np.array(t_med); t_q1 = np.array(t_q1); t_q3 = np.array(t_q3)
+    diags = [p["diagnostics"] for p in pts]
+    floor = diags[0]["floor"]
+    trans = [d["transition_rho_per_realization"] for d in diags]
+    settled = [[t for t in tr if t is not None] for tr in trans]
+    never = [d["n_never_settled"] for d in diags]
+    t_med = np.array([d["pred_transition_rho_median"] for d in diags])
+    t_q1 = np.array([d["pred_transition_rho_q1"] for d in diags])
+    t_q3 = np.array([d["pred_transition_rho_q3"] for d in diags])
 
     fig, ax = plt.subplots(figsize=(3.2, 2.0))
     rng = np.random.default_rng(7)
-    for xi, tr in zip(x, trans_per):
-        jx = xi + rng.uniform(-0.12, 0.12, size=len(tr))
-        ax.plot(jx, tr, ".", color=RED, ms=3, alpha=0.25, zorder=1)
-    ax.fill_between(x, t_q1, t_q3, color=RED, alpha=0.18, zorder=2,
-                    label="bootstrap IQR")
-    ax.plot(x, t_med, "o-", color=RED, lw=1.4, ms=4, zorder=3,
-            label="predicted collapse")
-    ax.axhline(HOPF, color=DARK, ls="--", lw=1.1, label="Hopf, 24.74")
-    ax.axhline(COEX, color=TEAL, ls="-.", lw=1.1, label="coexistence, 24.06")
+    for xi, tr in zip(x, settled):
+        jx = xi + rng.uniform(-0.22, 0.22, size=len(tr))
+        ax.plot(jx, tr, ".", color=RED, ms=2.6, alpha=0.4, mec="none", zorder=1)
+    ax.plot(x, t_med, "-", color=RED, lw=0.9, alpha=0.7, zorder=2)
+    ax.errorbar(x, t_med, yerr=[t_med - t_q1, t_q3 - t_med], fmt="o", color=RED,
+                ms=4, elinewidth=1.4, capsize=2.5, capthick=1.1, zorder=3)
+
+    left = x[0] - 0.86
+    ax.set_xlim(left, x[-1] + 0.69)
+    lo = floor - 1.1
+    ax.set_ylim(lo, max([HOPF] + [max(s) for s in settled if s]) + 1.3)
+
+    # landmark lines, labelled at the left where the data sit lowest
+    ax.axhline(HOPF, color=DARK, ls="--", lw=0.9, zorder=0)
+    ax.axhline(COEX, color=TEAL, ls="-.", lw=0.9, zorder=0)
+    ax.text(left + 0.15, HOPF + 0.15, f"Hopf {HOPF}", fontsize=6.5,
+            color=DARK, va="bottom")
+    ax.text(left + 0.15, COEX - 0.15, f"coexistence onset {COEX}", fontsize=6.5,
+            color=TEAL, va="top")
+
+    # networks still chaotic at the floor, counted in an overflow strip below it
+    mid = (lo + floor) / 2
+    ax.axhspan(lo, floor, color="0.93", zorder=0)
+    for xi, n, tr in zip(x, never, trans):
+        ax.text(xi, mid, f"{n}/{len(tr)}", ha="center", va="center",
+                fontsize=6.3, color="0.3")
+    axis_side = mtransforms.blended_transform_factory(ax.transAxes, ax.transData)
+    ax.text(-0.025, mid, f"<{floor:g}", transform=axis_side, ha="right",
+            va="center", fontsize=7)
+
+    ax.set_yticks([t for t in ax.get_yticks() if floor < t < HOPF])
+    ax.set_xticks(x)
+    ax.grid(axis="y", alpha=0.25)
     ax.set_xlabel(r"distance of lower edge above Hopf $d$")
     ax.set_ylabel(r"predicted collapse $\rho$")
-    ax.set_xticks(x); ax.set_ylim(23.8, 25.2); ax.grid(alpha=0.25)
-    ax.legend(loc="upper right", ncol=2, columnspacing=1.0, **LEG)
     _save(fig, "fig4_c4_position")
 
 

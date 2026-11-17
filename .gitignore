@@ -3,9 +3,13 @@ __pycache__/
 
 # Regenerable caches. These rebuild deterministically from the logged seeds
 # (see the reproducibility statement), so they are kept out of the repo.
-data/truth_cache.pkl            # C2-C4 ground-truth bifurcation + VGTT cache
-data/ground_truth_*.pkl         # C1 ground-truth bifurcation cache
-data/segcache/                  # per-config training segments (md5-seeded)
+# (git has no trailing comments, so each note sits on its own line)
+# C2-C4 ground-truth bifurcation + VGTT cache
+data/truth_cache.pkl
+# C1 ground-truth bifurcation cache
+data/ground_truth_*.pkl
+# per-config training segments (md5-seeded)
+data/segcache/
 data/*.log
 
 # Deliberately NOT ignored (shipped so figures reproduce from cache):

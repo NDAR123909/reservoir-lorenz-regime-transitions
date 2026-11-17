@@ -53,9 +53,17 @@ region, excluded from the amplitude RMSE.*
   - From M = 3 samples onwards, the reach is flat at Δρ ≈ 0.30 no matter
   how densely the window is filled.
 - **C4** finds that no window crosses the Hopf cleanly.
-  - Instead, every window, regardless of position, places the predicted collapse at ρ ≈ 24.10
-  - That overshoots the true Hopf at ρ ≈ 24.74 by the same 0.64, landing on the
-  coexistence onset at ρ ≈ 24.06 where the chaotic attractor actually terminates
+  - No network, in any window, predicts a fixed point anywhere above ρ = 24.06,
+  the coexistence onset where the true chaotic attractor ends.
+  - Walked down to ρ = 15, the networks hold their chaotic attractor far below that.
+  Among networks that do settle, the median collapse is ρ ≈ 17.6, 18.5, 19.65 and 20.05
+  for d = 0.26, 2.26, 4.26 and 6.26, and more than half are on a fixed point from
+  ρ ≈ 16.8, 18.1, 18.8 and 19.5. 31 of 128 networks are still chaotic at ρ = 15.
+  - The collapse drifts upward as the window moves away from the Hopf, but the spread
+  between reservoir draws is of the same size as the drift.
+  - An earlier version reported a collapse at ρ ≈ 24.10 in every window. That value
+  came from the downward walk filling in fixed points after six misses instead of
+  measuring them, and is withdrawn.
 - **C5** finds that the pipeline is deterministic on the pinned stack, so a clean checkout
   rebuilds every figure bit for bit.
 
@@ -145,6 +153,9 @@ python make_figures.py
 python make_merged_figure.py                             # paper Figure 3, instant
 ```
 
+Add `--workers N` to any `--mode run` call to spread a batch over N processes. The
+cells come out the same either way.
+
 **Figure 1** (C1) has its own ground-truth cache:
 
 ```bash
@@ -162,9 +173,12 @@ python make_attractor_figure.py                          # roughly 15 seconds
 
 Assuming a clean checkout, these are the following respective timings for the pinned stack: 
 - Figure 1 takes roughly **8 mins**
-- Figures 2-4 take roughly **22–27 mins each**
+- Figures 2 and 3 take roughly **22–27 mins each**
+- Figure 4 takes roughly **45 mins** on one core, since every network is walked down
+  to ρ = 15 (about 15 mins with `--workers 3`; measured on the machine used for the
+  C4 rerun)
 - Figure 5 takes roughly **15 seconds**.
-- The entire pipeline takes just **a little over an hour** end to end.
+- The entire pipeline takes **about two hours** end to end on one core.
 
 ## Brief overview of the model
 
